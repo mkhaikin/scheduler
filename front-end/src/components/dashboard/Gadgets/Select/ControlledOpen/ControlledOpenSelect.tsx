@@ -24,22 +24,46 @@ interface Props {
   param: string; // your props validation
 }
 */
+
+
 export const ControlledOpenSelect = (props: any) =>  {
+  let initPos = '1';
+  console.log(props.initPos + " is type " + typeof(props.initPos))
+  if(props && props.initPos){
+    initPos = '' + props.initPos
+    console.log(props.name + " Init position: " + initPos)
+  }
   const classes = useStyles();
-  const [name, setName] = React.useState<string | number>(1);
+  const [name, setName] = React.useState<string | number>(initPos);
   const [open, setOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    setName(props.initPos);
+}, [props.initPos])
 
   //console.log("ControlledOpenSelect: " + props.posSelect)
   const posSelect: any[] = props.posSelect
 
-  const menuPos = posSelect.map( (pos) =>
-      //console.log("!!! " + pos.id + " " + pos.pos  );
-      <MenuItem value={pos.id}>{pos.pos}</MenuItem>
-  );
+  const menuPrompt = () =>{
+    <MenuItem value="">
+        <em>select the value</em>
+    </MenuItem>
+  }
 
+  const menuPos = posSelect.map( (pos, keyIndex) =>
+      
+      <MenuItem key={keyIndex} value={pos.id}>{pos.pos}</MenuItem>
+  );
+/*
+  if(typeof props.initPos !== 'undefined' && props.initPos !== null)
+    setName(props.initPos)
+  else
+    setName(initPos)
+*/
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setName(event.target.value as number);
-    console.log("Select onChange: " + event.target.value)
+    console.log("Select onChange value: " + event.target.value)
+ 
     props.onPositionChange(event.target.value)
   };
 
@@ -62,9 +86,11 @@ export const ControlledOpenSelect = (props: any) =>  {
           open={open}
           onClose={handleClose}
           onOpen={handleOpen}
+          
           value={name}
           onChange={handleChange}
         >
+          {props.prompt? menuPrompt : null}
           {menuPos}
 
         </Select>

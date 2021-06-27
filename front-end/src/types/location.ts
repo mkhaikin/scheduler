@@ -8,6 +8,14 @@ export enum LocationActionTypes{
     FETCH_LOCATIONS = 'FETCH_LOCATIONS',
     FETCH_LOCATIONS_SUCCESS = 'FETCH_LOCATIONS_SUCCESS',
     FETCH_LOCATIONS_ERROR = 'FETCH_LOCATIONS_ERROR',
+
+    DELETE_LOCATION = 'DELETE_LOCATION',
+    DELETE_LOCATION_SUCCESS = 'DELETE_LOCATION_SUCCESS',
+    DELETE_LOCATION_ERROR = 'DELETE_LOCATION_ERROR',
+
+    UPDATE_LOCATION = 'UPDATE_LOCATION',
+    UPDATE_LOCATION__SUCCESS = 'UPDATE_LOCATION__SUCCESS',
+    UPDATE_LOCATION_ERROR = 'UPDATE_LOCATION_ERROR',
 }
 
 interface FetchLocationAction{
@@ -24,4 +32,40 @@ interface FetchLocationErrorAction{
     payload: string;
 }
 
-export type LocationAction = FetchLocationAction | FetchLocationSuccessAction | FetchLocationErrorAction
+interface DeleteLocationAction{
+    type: LocationActionTypes.DELETE_LOCATION;
+}
+
+interface DeleteLocationSuccessAction{
+    type: LocationActionTypes.DELETE_LOCATION_SUCCESS;
+    payload: number;
+}
+
+interface DeleteLocationErrorAction{
+    type: LocationActionTypes.DELETE_LOCATION_ERROR;
+    payload: string;
+}
+
+interface UpdateLocationAction{
+    type: LocationActionTypes.UPDATE_LOCATION;
+}
+
+interface UpdateLocationSuccessAction{
+    type: LocationActionTypes.UPDATE_LOCATION__SUCCESS;
+    payload: any;
+}
+
+interface UpdateLocationErrorAction{
+    type: LocationActionTypes.UPDATE_LOCATION_ERROR;
+    payload: string;
+}
+
+export type LocationAction = FetchLocationAction | 
+                            FetchLocationSuccessAction | 
+                            FetchLocationErrorAction | 
+                            DeleteLocationAction | 
+                            DeleteLocationSuccessAction | 
+                            DeleteLocationErrorAction |
+                            UpdateLocationAction |
+                            UpdateLocationSuccessAction |
+                            UpdateLocationErrorAction

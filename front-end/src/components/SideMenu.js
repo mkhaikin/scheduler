@@ -8,6 +8,9 @@ import IconPeople from '@material-ui/icons/People'
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import IconBarChart from '@material-ui/icons/BarChart'
 import IconLibraryBooks from '@material-ui/icons/LibraryBooks'
+import HelpIcon from '@material-ui/icons/Help';
+import LocationCityIcon from '@material-ui/icons/LocationCity';
+import ScheduleIcon from '@material-ui/icons/Schedule';
 
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -54,9 +57,10 @@ const SideMenu = (props) => {
     const [openHelp, setOpenHelp] = React.useState(false)
     const [openEmployees, setOpenEmployees] = React.useState(false)
     const [openLocations, setOpenLocations] = React.useState(false)
+    const [openOrders, setOpenOrders] = React.useState(false)
 
     const {menuItem } = useTypesSelector(state=> state.menu)
-    const { showDashboardPage, showOrdersPage, showLocationsPage, showLocationForm, showEmployeesPage, showEmployeeForm, showStorePage, showReport1Page, showReport2Page, showHelpPage1, showHelpPage2} = useActions()
+    const { showDashboardPage, showOrdersPage, showOrderForm, showLocationsPage, showLocationForm, showRoutesPage, showEmployeesPage, showEmployeeForm, showStorePage, showReport1Page, showReport2Page, showHelpPage1, showHelpPage2} = useActions()
 
     useEffect( () => {
         console.log("Menu item: " + menuItem)
@@ -64,6 +68,10 @@ const SideMenu = (props) => {
 
     function handleClickReports() {
         setOpenReports(!openReports)
+    }
+
+    function handleClickOrders() {
+        setOpenOrders(!openOrders)
     }
 
     function handleClickLocations() {
@@ -87,17 +95,27 @@ const SideMenu = (props) => {
                     </ListItemIcon>                    
                     <MenuItemText text="Dashboard"/>
                 </ListItem>
-
-                <ListItem button className={classes.menuItem}  onClick={() =>showOrdersPage()}>
+                <ListItem button className={classes.menuItem}  onClick={() =>handleClickOrders()}>
                     <ListItemIcon className={classes.menuItemIcon}>
-                    <IconShoppingCart />
+                    <ScheduleIcon />
                     </ListItemIcon>
                     <MenuItemText text="Orders"/>
+                    {openOrders ? <IconExpandLess /> : <IconExpandMore />}
                 </ListItem>
-
+                <Collapse in={openOrders} timeout="auto" unmountOnExit>
+                    <Divider />
+                    <List component="div" disablePadding>
+                    <ListItem button className={classes.menuItem}  onClick={() =>showOrdersPage()}>
+                        <MenuItemText text="Worklog"/>
+                    </ListItem>
+                    <ListItem button className={classes.menuItem}  onClick={() =>showOrderForm()}>
+                        <MenuItemText text="Order Form"/>
+                    </ListItem>
+                    </List>
+                </Collapse>
                 <ListItem button className={classes.menuItem} onClick={() =>handleClickLocations()}>
                     <ListItemIcon className={classes.menuItemIcon}>
-                    <IconPeople />
+                    <LocationCityIcon/>
                     </ListItemIcon>
                    <MenuItemText text="Locations"/>
                    {openLocations ? <IconExpandLess /> : <IconExpandMore />}
@@ -110,6 +128,9 @@ const SideMenu = (props) => {
                     </ListItem>
                     <ListItem button className={classes.menuItem}  onClick={() =>showLocationForm()}>
                         <MenuItemText text="Location form"/>
+                    </ListItem>
+                    <ListItem button className={classes.menuItem}  onClick={() =>showRoutesPage()}>
+                        <MenuItemText text="Routes Table"/>
                     </ListItem>
                     </List>
                 </Collapse>
@@ -150,17 +171,17 @@ const SideMenu = (props) => {
                     <Divider />
                     <List component="div" disablePadding>
                     <ListItem button className={classes.menuItem}  onClick={() =>showReport1Page()}>
-                        <MenuItemText text="Report type 1"/>
+                        <MenuItemText text="Worklog: global"/>
                     </ListItem>
                     <ListItem button className={classes.menuItem}  onClick={() =>showReport2Page()}>
-                        <MenuItemText text="Report type 2"/>
+                        <MenuItemText text="Worklog: detail"/>
                     </ListItem>
                     </List>
                 </Collapse>
 
                 <ListItem button onClick={handleClickHelp} className={classes.menuItem}>
                     <ListItemIcon className={classes.menuItemIcon}>
-                    <IconLibraryBooks />
+                    <HelpIcon/>
                     </ListItemIcon>
                     <MenuItemText text="Help"/>
                     {openHelp ? <IconExpandLess /> : <IconExpandMore />}

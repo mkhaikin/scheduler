@@ -1,5 +1,5 @@
 import { GridColDef } from '@material-ui/data-grid';
-
+/*
 interface Data {
   id: number;
   employeeId: number;
@@ -9,7 +9,7 @@ interface Data {
   hireDate: string;
   salary: number;  
 }
-
+*/
 ///////////////////////////////////////
 interface employeeData {
   id: number;
@@ -33,7 +33,7 @@ function createEmployeeData(
   return { id, employeeId, firstname, lastname, email, phone, positionId };
 }
 /////////////////////////////////////
-
+/*
 function createData(
   id: number,
   employeeId: number,
@@ -45,6 +45,7 @@ function createData(
 ): Data {
   return { id, employeeId, name, email, phone, hireDate, salary };
 }
+*/
 
 export function getRows( data: any[]){
 
