@@ -12,6 +12,16 @@ module.exports = {
                                     }
                                 },
 
+    getAllUsersIdName: async function (req, res, next)  {
+        try{
+            let results = await db.allusersIdName();
+            res.json(results);
+        } catch(e){
+            console.log(e);
+            res.sendStatus(500);
+        }
+    },                                
+
     getUserById: async function (req, res, next) {
                                     try{
                                         let results = await db.userByID(req.params.id);
@@ -72,4 +82,28 @@ module.exports = {
                                     }
                                     
                                 },
+    updateUser :    async function(req, res, next) {  
+                                    let ind = req.body.ind;
+                                    let firstname = req.body.firstname;
+                                    let lastname = req.body.lastname;
+                                    let email = req.body.email;
+                                    let cell = req.body.phone;
+                                    let positionId = req.body.positionId;
+
+                                    console.log("ind: " + req.body.ind);
+                                    console.log("firstname: " + req.body.firstname);
+                                    console.log("lastname: " + req.body.lastname);
+                                    console.log("email: " + req.body.email);
+                                    console.log("cell: " + req.body.phone);
+                                    console.log("positionId: " + req.body.positionId);
+                                
+                                    try{
+                                        let results = await db.updateuser( ind, firstname, lastname, email, cell, positionId);
+                                        res.json(results);
+                                    } catch(e){
+                                        console.log(e);
+                                        res.sendStatus(500);
+                                    }
+                                    
+                                },                                
 }

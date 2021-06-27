@@ -25,3 +25,32 @@ interface FetchRoutesErrorAction{
 }
 
 export type RoutesAction = FetchRoutesAction | FetchRoutesSuccessAction | FetchRoutesErrorAction
+//////////////////////////////////////////////
+export interface RouteRecordState {
+    routeId:string;
+    routeName:string;
+    loading: boolean;
+    error: null | string;
+}
+
+export enum RoutesActionTypes{
+    FETCH_ROUTE = 'FETCH_ROUTE',
+    FETCH_ROUTE_SUCCESS = 'FETCH_ROUTE_SUCCESS',
+    FETCH_ROUTE_ERROR = 'FETCH_ROUTE_ERROR',
+}
+
+interface FetchRouteRecordAction{
+    type: RoutesActionTypes.FETCH_ROUTE;
+}
+
+interface FetchRouteRecordSuccessAction{
+    type: RoutesActionTypes.FETCH_ROUTE_SUCCESS;
+    payload: any[];
+}
+
+interface FetchRouteRecordErrorAction{
+    type: RoutesActionTypes.FETCH_ROUTE_ERROR;
+    payload: string;
+}
+
+export type RouteRouteRecordAction = FetchRouteRecordAction | FetchRouteRecordSuccessAction | FetchRouteRecordErrorAction

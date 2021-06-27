@@ -6,9 +6,11 @@ export interface MenuState{
 export enum MenuActionTypes{
     SHOW_DASHBOARD_PAGE = 'SHOW_DASHBOARD_PAGE',
     SHOW_ORDERS_PAGE = 'SHOW_ORDERS_PAGE',
+    SHOW_ORDER_FORM = 'SHOW_ORDER_FORM',
     //SHOW_CUSTOMERS_PAGE = 'SHOW_CUSTOMERS_PAGE',
     SHOW_LOCATIONS_PAGE = 'SHOW_LOCATIONS_PAGE',
     SHOW_LOCATIONS_FORM = 'SHOW_LOCATIONS_FORM',
+    SHOW_ROUTES_PAGE = 'SHOW_ROUTES_PAGE',
     SHOW_EMPLOYEES_PAGE = 'SHOW_EMPLOYEES_PAGE',
     SHOW_EMPLOYEE_FORM = 'SHOW_EMPLOYEE_FORM',
     SHOW_STORE_PAGE = 'SHOW_STORE_PAGE',
@@ -21,9 +23,11 @@ export enum MenuActionTypes{
 export enum PageTypes{
     DASHBOARD_PAGE = 'DASHBOARD_PAGE',
     ORDERS_PAGE = 'ORDERS_PAGE',
+    ORDER_FORM = 'ORDER_FORM',
     //CUSTOMERS_PAGE = 'CUSTOMERS_PAGE',
     LOCATIONS_PAGE = 'LOCATIONS_PAGE',
     LOCATIONS_FORM = 'LOCATIONS_FORM',
+    ROUTES_PAGE = 'ROUTES_PAGE',
     EMPLOYEES_PAGE = 'EMPLOYEES_PAGE',
     EMPLOYEE_FORM = 'EMPLOYEE_FORM',
     STORE_PAGE = 'STORE_PAGE',
@@ -40,6 +44,10 @@ interface DashboardMenuAction{
 interface OrdersMenuAction{
     type: MenuActionTypes.SHOW_ORDERS_PAGE;
 }
+
+interface OrderFormMenuAction{
+    type: MenuActionTypes.SHOW_ORDER_FORM;
+}
 /*
 interface CustomersMenuAction{
     type: MenuActionTypes.SHOW_CUSTOMERS_PAGE;
@@ -51,6 +59,10 @@ interface LocationsMenuAction{
 
 interface LocationFormMenuAction{
     type: MenuActionTypes.SHOW_LOCATIONS_FORM;
+}
+
+interface RoutesMenuAction{
+    type: MenuActionTypes.SHOW_ROUTES_PAGE;
 }
 
 interface EmployeesMenuAction{
@@ -82,7 +94,8 @@ interface Help2MenuAction{
 }
 
 export type MenuAction = DashboardMenuAction 
-| OrdersMenuAction 
+| OrdersMenuAction
+| OrderFormMenuAction 
 //| CustomersMenuAction 
 | LocationsMenuAction 
 | LocationFormMenuAction
@@ -93,3 +106,4 @@ export type MenuAction = DashboardMenuAction
 | Report2MenuAction 
 | Help1MenuAction 
 | Help2MenuAction
+| RoutesMenuAction

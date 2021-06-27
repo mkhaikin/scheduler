@@ -11,14 +11,14 @@ const PostContactForm = async (
 
     var obj2 = JSON.parse(JSON.stringify(values));
    
-      
+  /*    
             console.log("firstName: " + obj2.firstName)
             console.log("lastName: " + obj2.lastName)
             console.log("email: " + obj2.email)
             console.log("phone: " + obj2.phone)
             console.log("notice: " + obj2.notice)
             console.log("position: " + obj2.position)
-
+*/
         const headers = {
             'Content-Type': 'application/json',
         }
@@ -81,7 +81,7 @@ export const useFormControls = () => {
           temp.phone = /^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/.test(fieldValues.phone)
             ? ""
             : "Phone is not valid.";
-      }
+    }
 
     if ("notice" in fieldValues)
       temp.message =

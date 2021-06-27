@@ -12,20 +12,36 @@ const PostContactForm = async (
     const headers = {
         'Content-Type': 'application/json',
     }
+    let dir: any
+    
+    switch (values.w_e){
+      case 2: dir = 'W'
+        break;
+      case 3: dir = 'E'
+        break;
+      default: dir = null
+    }
   
   var obj = {
     routeId:  values.routeId,
     area: values.area, 
     street_avenue: values.street_avenue,
-    w_e: values.w_e,
+    w_e: dir,
     number: values.number,
     notice: values.notice,
   }
-    
-    let res = await axios.post('http://localhost:3000/api/location', obj, {headers: headers})
-    console.log(res)
-    
-  // do stuff
+
+  console.log( "routeId: " + obj.routeId)
+  console.log( "area: " + obj.area)
+  console.log( "street_avenue: " + obj.street_avenue)
+  console.log( "w_e: " + obj.w_e)
+  console.log( "number: " + obj.number)
+  console.log( "notice" + obj.notice)
+
+  let res = await axios.post('http://localhost:3000/api/location', obj, {headers: headers})
+  console.log(res)
+  
+    // do stuff
   // if successful
   if (true) successCallback();
   else errorCallback();
@@ -34,7 +50,7 @@ const PostContactForm = async (
 const initialFormValues = {
   area: "",
   street_avenue: "",
-  w_e: 0,
+  w_e: 1,
   number: "1",
   notice: "",
   routeId: 1,
@@ -53,9 +69,7 @@ export const useFormControls = () => {
       temp.area = fieldValues.area ? "" : "This field is required.";
 
     if ("street_avenue" in fieldValues)
-        temp.street_avenue = fieldValues.street_avenue ? "" : "This field is required.";      
-
-    
+        temp.street_avenue = fieldValues.street_avenue ? "" : "This field is required.";          
 
     if ("number" in fieldValues) {
         temp.number = fieldValues.number ? "" : "This field is required.";
@@ -85,7 +99,7 @@ export const useFormControls = () => {
       ...values,
       routeId: value
     });
-    //console.log("handlePositionValue:  " + value)
+    console.log("handleRouteValue:  " + value)
    
   };
 
@@ -95,7 +109,7 @@ export const useFormControls = () => {
       ...values,
       w_e: value
     });
-    //console.log("handlePositionValue:  " + value)
+    console.log("handleWEValue:  " + value)
    
   };
 

@@ -22,6 +22,11 @@ const inputFieldValues = [
     label: "Str/Ave",
     id: "my-street"
   },
+  {
+    name: "number",
+    label: "Number",
+    id: "my-number"
+  },
 /*  {
     name: "w_e",
     label: "W/E",
