@@ -5,6 +5,7 @@ import { CssBaseline, makeStyles } from '@material-ui/core';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ComponentsList from '../components/ComponentsList';
+import { ConfirmProvider } from "material-ui-confirm";
 
 const useStyles = makeStyles({
   appMain:{
@@ -18,6 +19,7 @@ const useStyles = makeStyles({
 function App() {
   const classes = useStyles();
   return (
+    <ConfirmProvider>
     <React.Fragment>
     <div className="page-container">
     <div className="content-wrap">
@@ -31,6 +33,7 @@ function App() {
     <footer className ="footer" ><Footer/></footer>
     <CssBaseline/>    
     </React.Fragment>
+    </ConfirmProvider>
   );
 }
 

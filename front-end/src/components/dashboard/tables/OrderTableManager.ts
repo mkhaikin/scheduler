@@ -1,49 +1,47 @@
-import { GridColDef } from '@material-ui/data-grid';
+import {
+  GridColDef,
+} from "@material-ui/data-grid";
 
-interface Data {
-  id: number;
-  orderId: number;
-  customerName: string;
-  orderStatus: string;
-  customerPayment?: string;  
-  orderDetails?: string;
+///////////////////////////////////////////
+interface worklogData {
+  id:number;
+  ind: number;
+  doneon: string;
+  bag: number;
+  location: string;
+  driver: string
 }
 
-function createData(
+function createWorklogData(
   id: number,
-  orderId: number,
-  customerName: string,
-  orderStatus: string,
-  customerPayment?: string,  
-  orderDetails?: string,
-): Data {
-  return { id, orderId, customerName, orderStatus, customerPayment, orderDetails };
+  ind: number,
+  doneon: string,
+  bag: number,
+  location: string,
+  driver: string,
+): worklogData {
+  return { id, ind, doneon, bag, location, driver};
 }
 
-export function getRows(){
-  const rows = [
-    createData( 1, 101, 'Snow Jon', 'ordered', undefined, undefined),
-    createData( 2, 202, 'Lannister Cersei', 'inprocess', undefined, 'order details 1'),
-    createData( 3, 303, 'Lannister Jaime', 'ordered', undefined, undefined),
-    createData( 4, 404, 'Stark Arya', 'payed', 'visa', 'order details 2'),
-    createData( 5, 505, 'Targaryen Daenerys', 'delivered', 'visa', 'order details 3'),
-    createData( 6, 606, 'Melisandre Smith', 'inprocess', undefined, undefined),
-    createData( 7, 707, 'Clifford Ferrara', 'inprocess', undefined, 'order details 4'),
-    createData( 8, 808, 'Frances Rossini', 'delivered', 'cash', 'order details 5'),
-    createData( 9, 909, 'Roxie Harvey', 'payed', 'mastercard', 'order details 6'),
-  ];
+
+export function getRows(data: any[]){
+  const rows:any = []
+  data.map((row, index) => {
+      
+      rows.push(createWorklogData( index + 1, row.ind, row.doneon, row.bag, row.location, row.driver))
+  })
 
   return rows;
 }
 
 interface HeadCell {  
-  field: keyof Data;
+  field: keyof worklogData;
   headerName: string;
   width: number;
 }
 
 function createCol(
-  field: keyof Data,
+  field: keyof worklogData,
   headerName: string,
   width: number,
 ): HeadCell {
@@ -52,12 +50,13 @@ function createCol(
 
 export function getCols(){
   const columns: GridColDef[] = [
-    createCol('id', 'ID', 70),
-    createCol('orderId', 'Order', 90),
-    createCol('customerName', 'Customer', 180),
-    createCol('orderStatus', 'Status', 130),
-    createCol('customerPayment', 'Payment', 110),
-    createCol('orderDetails', 'Details', 200),
+    
+    createCol('id', '#', 100),
+    createCol('ind', 'WL#', 150),
+    createCol('doneon', 'Date', 150),
+    createCol('bag', 'Bags', 150),
+    createCol('location', 'Adress', 300),
+    createCol('driver', 'Driver', 250),
   ];
 
   return columns;

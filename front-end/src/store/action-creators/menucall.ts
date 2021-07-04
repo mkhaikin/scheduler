@@ -12,6 +12,12 @@ export const showOrdersPage = () => {
         dispatch( {type: MenuActionTypes.SHOW_ORDERS_PAGE})
     }
 }
+
+export const showOrderForm = () => {
+    return (dispatch: Dispatch<MenuAction>) =>{
+        dispatch( {type: MenuActionTypes.SHOW_ORDER_FORM})
+    }
+}
 /*
 export const showCustomersPage = () => {
     return (dispatch: Dispatch<MenuAction>) =>{
@@ -28,6 +34,12 @@ export const showLocationsPage = () => {
 export const showLocationForm = () => {
     return (dispatch: Dispatch<MenuAction>) =>{
         dispatch( {type: MenuActionTypes.SHOW_LOCATIONS_FORM})
+    }
+}
+
+export const showRoutesPage = () => {
+    return (dispatch: Dispatch<MenuAction>) =>{
+        dispatch( {type: MenuActionTypes.SHOW_ROUTES_PAGE})
     }
 }
 
