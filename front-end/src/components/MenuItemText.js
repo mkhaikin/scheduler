@@ -4,7 +4,8 @@ import ListItemText from '@material-ui/core/ListItemText'
 
 const style = {
     meniItemText: {
-          fontSize: 12
+          fontSize: 12,
+          color:'#fff'
     }
 }
 
