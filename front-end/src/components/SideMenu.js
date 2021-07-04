@@ -45,10 +45,11 @@ const style = {
       },
       menuItemIcon: {
         color: '#97c05c',
-      },
-      meniItemText: {
-          fontSize: 12
       }
+    //   ,
+    //   menuItemText: {
+    //       fontSize: 22
+    //   }
 }
 
 const SideMenu = (props) => {
