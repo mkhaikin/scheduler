@@ -33,23 +33,23 @@ export interface RouteRecordState {
     error: null | string;
 }
 
-export enum RoutesActionTypes{
+export enum RouteActionTypes{
     FETCH_ROUTE = 'FETCH_ROUTE',
     FETCH_ROUTE_SUCCESS = 'FETCH_ROUTE_SUCCESS',
     FETCH_ROUTE_ERROR = 'FETCH_ROUTE_ERROR',
 }
 
 interface FetchRouteRecordAction{
-    type: RoutesActionTypes.FETCH_ROUTE;
+    type: RouteActionTypes.FETCH_ROUTE;
 }
 
 interface FetchRouteRecordSuccessAction{
-    type: RoutesActionTypes.FETCH_ROUTE_SUCCESS;
+    type: RouteActionTypes.FETCH_ROUTE_SUCCESS;
     payload: any[];
 }
 
 interface FetchRouteRecordErrorAction{
-    type: RoutesActionTypes.FETCH_ROUTE_ERROR;
+    type: RouteActionTypes.FETCH_ROUTE_ERROR;
     payload: string;
 }
 

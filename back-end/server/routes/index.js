@@ -5,6 +5,10 @@ const {getAllLocations, getLocationById, getLocationsByRouteID, getLocationsByAr
 const {getAllPositions, getAllRoutes, addRoute, updateRouteName} = require('./handler_controller');
 const {addJob, getJobsTodayFuture, deleteJobById, updateJob, getJobsThisWeek} = require('./job_controller');
 const {getAllWorklog, getWeekWorklog, getSummaryWorklog} = require('./worklog_controller');
+const { login, registration, logout, activate, refresh, access } = require('./access_controller');
+const {todayjobs}  = require('./driver_controller');
+const {body} = require('express-validator')
+const authMiddleware = require('../middleware/auth-middleware')
 
 const router = express.Router();
 //-------------- GET
@@ -46,13 +50,13 @@ router.get('/job/dayfuture', (req, res, next) => getJobsTodayFuture (req, res, n
 router.get('/job/thisweek', (req, res, next) => getJobsThisWeek (req, res, next));
 
 //----------- worklog
-router.get('/worklog', (req, res, next) => getAllWorklog (req, res, next));
+router.get('/worklog', authMiddleware,(req, res, next) => getAllWorklog (req, res, next));
 router.get('/worklog/week', (req, res, next) => getWeekWorklog (req, res, next));
 router.get('/worklog/sum', (req, res, next) => getSummaryWorklog (req, res, next));
 
 
 //--------------- POST
-router.post('/staff/user', (req, res, next) => addUser (req, res, next));
+router.post('/staff/user', (req, res, next) => addUser (req, res, next)); //+
 router.post('/location', (req, res, next) => addLocation (req, res, next));
 router.post('/job', (req, res, next) => addJob (req, res, next));
 
@@ -63,10 +67,24 @@ router.delete('/job/:ind', (req, res, next) => deleteJobById(req, res, next) );
 
 //----------------PUT
 router.put('/location', (req, res, next) => updateLocation (req, res, next));
-router.put('/staff/user', (req, res, next) => updateUser (req, res, next));
+router.put('/staff/user', (req, res, next) => updateUser (req, res, next)); //+
 router.put('/job', (req, res, next) => updateJob (req, res, next));
 
+// access
+//router.post('/registration', [body('emai').isEmail, body('password').isLength({min:3, max: 32})], (req, res, next) => registration(req, res, next));
+/* router.post('/registration', 
+    [body('emai').isEmail]
+, (req, res, next) => registration(req, res, next)); */
 
+router.post('/registration', (req, res, next) => registration(req, res, next));
+router.post('/login', (req, res, next) => login(req, res, next));
+router.post('/logout', (req, res, next) => logout(req, res, next));
+router.get('/activate/:link', (req, res, next) => activate(req, res, next));
+router.get('/refresh', (req, res, next) => refresh(req, res, next));
+router.get('/access', (req, res, next) => access(req, res, next));
+
+//driver job list
+router.get('/driver/todayjobs',  authMiddleware, (req, res, next) => todayjobs(req, res, next));
 
 
 module.exports = router;

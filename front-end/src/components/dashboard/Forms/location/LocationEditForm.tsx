@@ -78,7 +78,7 @@ export const LocationEditForm = (props: any) => {
     handleRouteIdValue,
     handleWEValue,
     errors
-} = useFormControls(loc[0].area, loc[0].street_avenue, loc[0].w_e, loc[0].number, loc[0].notice, loc[0].routeId, props.locId, handleFormClose);
+  } = useFormControls(loc[0].area, loc[0].street_avenue, loc[0].w_e, loc[0].number, loc[0].notice, loc[0].routeId, props.locId, handleFormClose);
 
   const getRoutes = () => {
     let arr: any[] 
@@ -120,7 +120,7 @@ export const LocationEditForm = (props: any) => {
             }
 
             return res;
-        }
+    }
   
   const handleFormCancel = () => {
     //e.preventDefault();

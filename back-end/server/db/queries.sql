@@ -141,6 +141,52 @@ query = {
     UPDATE_USER_BY_ID: `UPDATE users SET firstname=?, lastname=?, email=?, cell=?, positionId=? WHERE ind=?`,
     UPDATE_JOB_BY_ID: `UPDATE dayjoblist SET date=?, routeId=?, driverId=? WHERE ind=?`,
     UPDATE_ROUTE_BY_ID: `UPDATE routes SET name=? WHERE ind=?`,
+
+    CHECK_ACCESS_BY_EMAIL: `SELECT id FROM access WHERE email = ?`,
+    CREATE_ACCESS: `INSERT INTO access (email, password, activationlink) VALUES (?,?,?)`,
+    //CHECK_TOKEN_BY_ID: `SELECT ( SELECT id FROM token WHERE accessid=?) as id FROM dual`,
+    CHECK_TOKEN_BY_ID: `SELECT refreshtoken FROM token WHERE accessid=?`,
+    CHECK_TOKEN: `SELECT refreshtoken FROM token WHERE refreshtoken=?`,
+    REFRESH_TOKEN: `UPDATE token SET refreshtoken=? WHERE accessid=?`,
+    CREATE_TOKEN: `INSERT INTO token (accessid, refreshtoken) VALUES(?,?)`,
+    SELECT_ACCESS_DATA: `SELECT a.id, a.activated, u.positionid 
+                            FROM access a
+                            JOIN users u
+                            ON a.email = u.email
+                            WHERE a.email = ?`,
+    SELECT_ACCESS_ACTIVATION_LINK: `SELECT id FROM access WHERE activationlink = ?`,
+    ACTIVATE_ACCESS: 'UPDATE access SET activated=? WHERE id=?',
+    SELECT_PASSWORD: `SELECT password FROM access WHERE email = ?`,
+    DELETE_TOKEN: `UPDATE token SET refreshtoken=null WHERE refreshtoken=?`,
+    SELECT_TOKEN: `SELECT accessid, refreshtoken FROM token WHERE refreshtoken=?`,
+
+    SELECT_SCHEDULED_DRIVER_JOBS_TODAY_FUTURE: `SELECT d1.ind as ind, 
+                                                DATE_FORMAT(d1.date, '%Y-%m-%d') as scheduled, 
+                                                concat(d1.routeId, '-', r.name) as route, 
+                                                concat(d1.driverId, '-', u.firstname, ' ', u.lastname, ', ', u.cell) as driver
+                                        FROM dayjoblist d1
+	                                    JOIN routes as r 
+		                                ON   d1.routeId = r.ind
+	                                    JOIN users u
+		                                ON   d1.driverId = u.ind
+                                        WHERE STR_TO_DATE(d1.date, '%Y-%m-%d' ) >=  DATE(CURDATE()) 
+                                        AND u.email=?`,
+    SELECT_SCHEDULED_DRIVER_JOBS_TODAY: `SELECT d1.ind as ind, 
+                                                DATE_FORMAT(d1.date, '%Y-%m-%d') as scheduled, 
+                                                concat(d1.routeId, '-', r.name) as route, 
+                                                concat(d1.driverId, '-', u.firstname, ' ', u.lastname, ', ', u.cell) as driver,
+                                                l.area, l.street_avenue, l.w_e, l.number
+                                        FROM dayjoblist d1 
+	                                    JOIN routes as r 
+		                                ON   d1.routeId = r.ind
+	                                    JOIN users u
+		                                ON   d1.driverId = u.ind
+                                        JOIN locations l
+                                        ON r.ind = l.routeId
+                                        WHERE STR_TO_DATE(d1.date, '%Y-%m-%d' ) =  DATE(CURDATE()) 
+                                        AND u.email= ?`,                                        
+
+
 }
 
 
