@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect} from 'react';
 import { DataGrid} from '@material-ui/data-grid';
 import {getRows, getCols} from './GroupedWorklogTableManager'
 import {useTypesSelector} from "../../../hooks/menuTypesSelector";

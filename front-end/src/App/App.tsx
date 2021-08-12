@@ -10,7 +10,6 @@ import CRMContainer from '../components/CRMContainer';
 import SignInOutContainer from '../components/SignInOutContainer'
 import {Context} from '../index'
 import {observer} from 'mobx-react-lite'
-import { store } from '../store';
 
 const useStyles = makeStyles({
   appMain:{
@@ -25,13 +24,22 @@ function App() {
   const classes = useStyles();
   const {userstore} = useContext(Context)
   useEffect( () => {
-    if(localStorage.getItem('token')){
-      userstore.checkAuth()
-    }
+    (async function(){
+      try{
+                      if(localStorage.getItem('token')){
+                        await userstore.checkAuth()
+                        console.log("User: ----Start  ---------------------------------------------------")
+                        console.log("User: " + userstore.user.userbadge._positionid)
+                        console.log("User: -----End  --------------------------------------------------")
+                      }
+      }catch(e){
+        console.error(e);
+      }
+    })()
   }, [])
 
 
-  if(userstore.isLoading){
+  if(userstore.isLoading ){
     return <div>Loading...</div>
   }
   //let acc: boolean = false;
@@ -40,15 +48,26 @@ function App() {
       <SignInOutContainer />
     )
   }
+/*
+  if(userstore.isAuth){
+    return (
+      <div>
+      {`${userstore.user.email}  `}
+      {`${userstore.user.userbadge._positionid}`}
+      </div>
+    )
+  }
+*/
+
 
   return (
     <ConfirmProvider>
     <React.Fragment>
     <div className="page-container">
     <div className="content-wrap">
-    <Header user = {userstore}/>  
+    <Header />  
       <div className= {classes.appMain}>
-        {userstore.isAuth ? <CRMContainer /> : <SignInOutContainer />}                    
+       <CRMContainer />                     
        </div> 
     </div>   
     </div>

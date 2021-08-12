@@ -1,6 +1,5 @@
-import { GridColDef,  GridColumns } from "@material-ui/data-grid";
+import { GridColumns } from "@material-ui/data-grid";
 
-///////////////////////////////////////////
 interface routeData {
   id: number;
   routeId: string;
@@ -17,10 +16,10 @@ function createRouteData(
 
 export function getRows(data: any[]){
   const rows:any = []
-  data.map((row, index) => {
+  data.map((row, index) => (
       
       rows.push(createRouteData( index + 1, row.ind, row.name))
-  })
+  ))
 
   return rows;
 }

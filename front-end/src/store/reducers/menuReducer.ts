@@ -1,12 +1,14 @@
 import {MenuAction, MenuActionTypes, MenuState, PageTypes} from "../../types/menu"
 
 const initialState: MenuState = {
-    menuItem: PageTypes.ORDERS_PAGE,
-    title: 'Worklog',
+    menuItem: PageTypes.BASIC_PAGE,
+    title: 'Welcome To CRM',
 }
 
 export const menuReducer = (state = initialState, action: MenuAction): MenuState => {
     switch (action.type){
+        case MenuActionTypes.SHOW_BASIC_PAGE:
+            return {menuItem: PageTypes.BASIC_PAGE, title: 'Welcome To CRM'}
         case MenuActionTypes.SHOW_DASHBOARD_PAGE:
             return {menuItem: PageTypes.DASHBOARD_PAGE, title: 'Dashboard'}
         case MenuActionTypes.SHOW_ORDERS_PAGE:
@@ -35,6 +37,15 @@ export const menuReducer = (state = initialState, action: MenuAction): MenuState
             return {menuItem: PageTypes.HELP_PAGE_1, title: 'Help 1'}  
         case MenuActionTypes.SHOW_HELP_PAGE_2:
             return {menuItem: PageTypes.HELP_PAGE_2, title: 'Help 2'} 
+        
+        case MenuActionTypes.SHOW_SCHEDULED_TODAY:
+            return {menuItem: PageTypes.SCHEDULED_TODAY, title: 'Today Scheduled Job List'}
+        case MenuActionTypes.SHOW_SCHEDULED_WEEK:
+            return {menuItem: PageTypes.SCHEDULED_WEEK, title: 'This week Scheduled Job List'}
+        case MenuActionTypes.SHOW_ALL_SCHEDULED:
+            return {menuItem: PageTypes.ALL_SCHEDULED, title: 'All Scheduled Job List'}
+        case MenuActionTypes.SHOW_DRIVER_WORKLOG:
+            return {menuItem: PageTypes.DRIVER_WORKLOG, title: 'Driver Worklog List'}
         default:
             return state                             
     }

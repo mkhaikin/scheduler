@@ -1,6 +1,6 @@
 import { Dispatch } from "redux"
 import {WorklogAction, WorklogActionTypes} from "../../types/worklog"
-import axios from "axios";
+//import axios from "axios";
 import WorklogService from '../../services/WorklogService'
 
 export const fetchWorklogs = () => {
@@ -10,6 +10,23 @@ export const fetchWorklogs = () => {
             console.log("fetchWorklogs------------start")
             //const response = await axios.get('http://localhost:3000/api/worklog') 
             const response = await WorklogService.fetchWorklog()
+            //JSON.stringify
+            //console.log ("Response: " + response.data[0].ind)
+            //dispatch( {type: WorklogActionTypes.FETCH_WORKLOG_SUCCESS, payload: response.data})
+            dispatch( {type: WorklogActionTypes.FETCH_WORKLOG_SUCCESS, payload: response.data})
+        } catch (e){
+            dispatch( {type: WorklogActionTypes.FETCH_WORKLOG_ERROR, payload: "Error during download!"})
+        }
+    }
+}
+
+export const fetcDriverhWorklogs = () => {
+    return async (dispatch: Dispatch<WorklogAction>) => {
+        try{
+            dispatch( {type: WorklogActionTypes.FETCH_WORKLOG})
+            console.log("fetchDriverWorklogs------------start")
+            //const response = await axios.get('http://localhost:3000/api/worklog') 
+            const response = await WorklogService.fetchDriverWorklog()
             //JSON.stringify
             //console.log ("Response: " + response.data[0].ind)
             //dispatch( {type: WorklogActionTypes.FETCH_WORKLOG_SUCCESS, payload: response.data})
@@ -54,16 +71,22 @@ export const fetchSumWorklogs = () => {
     }
 }
 
-export const updateWorklog = (
-            ind: number,
-            bag:  number  ) => {
+export const insertUpdateWorklog = (
+            date: string, 
+            locationid: string, 
+            bag:  string,
+            driverid: string          ) => {
     return async (dispatch: Dispatch<WorklogAction>) => {
         try{
             dispatch( {type: WorklogActionTypes.UPDATE_WORKLOG})
+            
             var obj = {
-                        ind: ind,
-                        bag:  bag
+                        date: date,
+                        locationid: locationid,
+                        bag:  bag,
+                        driverid: driverid
                      }
+            /*                     
             const headers = {
                         'Content-Type': 'application/json',
             }                     
@@ -71,6 +94,9 @@ export const updateWorklog = (
             //JSON.stringify
             //console.log ("Response: " + JSON.stringify(response))
             console.log ("updateWorklog, ind: " + ind)
+            */
+            const response = await WorklogService.InsertUpdateWorklog( date, locationid, bag, driverid)
+            console.log ("Response: " + JSON.stringify( response))
             dispatch( {type: WorklogActionTypes.UPDATE_WORKLOG__SUCCESS, payload: obj})
         } catch (e){
             dispatch( {type: WorklogActionTypes.UPDATE_WORKLOG_ERROR, payload: "Error during update!"})

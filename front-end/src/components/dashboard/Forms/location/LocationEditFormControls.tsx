@@ -1,7 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
-import qs from "qs";
-import { CancelScheduleSend } from "@material-ui/icons";
+//import axios from "axios";
 import { useDispatch } from 'react-redux';
 import { updateLocation } from '../../../../store/action-creators/locationcall'
 
@@ -17,9 +15,9 @@ export const useFormControls = (area:string, street_avenue: string, w_e: number,
   ) => {
     
   
-      const headers = {
+/*       const headers = {
           'Content-Type': 'application/json',
-      }
+      } */
       let dir: any
       
       switch (values.w_e){
@@ -30,7 +28,7 @@ export const useFormControls = (area:string, street_avenue: string, w_e: number,
         default: dir = null
       }
   //  console.log("<<<<<<<<<<<<<<>>>>>>>>>>>>>>>" + values.ind)
-    var obj = {
+/*     var obj = {
       ind: values.ind,
       routeId:  values.routeId,
       area: values.area, 
@@ -38,7 +36,7 @@ export const useFormControls = (area:string, street_avenue: string, w_e: number,
       w_e: dir,
       number: values.number,
       notice: values.notice,
-    }
+    } */
   /*
     console.log( "ind: " + obj.ind)
     console.log( "routeId: " + obj.routeId)
@@ -180,7 +178,7 @@ export const useFormControls = (area:string, street_avenue: string, w_e: number,
     const isValid =
       Object.values(errors).every((x) => x === "") && formIsValid();
     if (isValid) {
-     let res = await UpdateContactForm(values, handleSuccess, handleError);
+     await UpdateContactForm(values, handleSuccess, handleError);
      
       
     }

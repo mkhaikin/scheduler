@@ -181,6 +181,19 @@ sechandDB.jobsThisWeek = () => {
     });
 };
 //---------- worklog
+sechandDB.addWorklog = (date, locationid, bag, driverid) => {
+    //console.log("DB addWorklog------------start")
+    return new Promise((resolve, reject) => {
+        pool.query( q.INSERT_UPDATE_WORKLOG_TODAY, [date, locationid, bag, driverid], (err, results) => {
+            if(err){
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+
 sechandDB.getWorklog = () => {
     //console.log("DB getWorklog------------start")
     return new Promise((resolve, reject) => {
@@ -443,6 +456,7 @@ sechandDB.findTokenById = (accessid) => {
                 return reject(err);
             }
             console.log("DB findToken from token: " + results)
+            console.log(">>>>>>>>>>> DB findToken from token length: " + results.length)
             return resolve(results);
         });
     });
@@ -533,10 +547,46 @@ sechandDB.findTokenByToken = (token) => {
     });
 };
 
-sechandDB.jobsForToday = (email) => {
+sechandDB.driverJobsForToday = (email) => {
     console.log("db jobs for today: " + email)
     return new Promise((resolve, reject) => {
         pool.query( q.SELECT_SCHEDULED_DRIVER_JOBS_TODAY, [email], (err, results) => {
+            if(err){
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+sechandDB.driverJobsThisWeek = (email) => {
+    console.log("db jobs this week: " + email)
+    return new Promise((resolve, reject) => {
+        pool.query( q.SELECT_SCHEDULED_DRIVER_JOBS_THISWEEK, [email], (err, results) => {
+            if(err){
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+sechandDB.driverJobsTodayFuture = (email) => {
+    console.log("db jobs for today: " + email)
+    return new Promise((resolve, reject) => {
+        pool.query( q.SELECT_SCHEDULED_DRIVER_JOBS_TODAY_FUTURE, [email], (err, results) => {
+            if(err){
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+sechandDB.getDriverWorklog = (email) => {
+    console.log("db worklogy: " + email)
+    return new Promise((resolve, reject) => {
+        pool.query( q.SELECT_DRIVER_ALL_WORKLOG, [email], (err, results) => {
             if(err){
                 return reject(err);
             }

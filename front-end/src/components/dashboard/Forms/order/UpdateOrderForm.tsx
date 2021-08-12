@@ -1,4 +1,4 @@
-import { Button, Grid, Typography  } from "@material-ui/core";
+import { Button, Grid,  } from "@material-ui/core";
 import React,  { useEffect } from "react";
 import { useFormControls } from "./UpdateOrderFormControls";
 import {ControlledOpenSelect} from "../../Gadgets/Select/ControlledOpen/ControlledOpenSelect";
@@ -12,8 +12,16 @@ import MaterialUIPickers from '../../Gadgets/Picker/Picker';
 
 //export const UpdateOrderForm = (indJ:any, routeJ: any, driverJ: any, scheduledJ: any, closeDialog:any) => {
 export const UpdateOrderForm = (props:any) => {
-  const {routes, loading, error } = useTypesSelector(state=> state.routes)
-  const {usersIdName, loadingId, errorId } = useTypesSelector(state=> state.user)
+  const {routes } = useTypesSelector(state=> state.routes)
+  const routesLoading = useTypesSelector(state=> state.routes.loading)
+  const routesError = useTypesSelector(state=> state.routes.error)
+
+  const {usersIdName } = useTypesSelector(state=> state.user)
+  const usersLoading = useTypesSelector(state=> state.user.loadingId)
+  const usersError = useTypesSelector(state=> state.user.errorId)
+
+  const jobUpdating = useTypesSelector(state=> state.job.loading)
+  const jobUpdateError = useTypesSelector(state=> state.job.error)
 
   let jobdate:string= props.scheduledJ
   let formatted_date = jobdate.replace(/-/g, '/');
@@ -83,7 +91,7 @@ export const UpdateOrderForm = (props:any) => {
       console.log( "DRIVER ID: " + driver[0].id)
       initPos = driver[0].id
   } 
-  let init:string = '' + initPos
+  //let init:string = '' + initPos
   //const i = "'" + 3 + "'"
 //{i}
 
@@ -94,6 +102,33 @@ const handleFormCancel = () => {
   props.closeDialog(false)
 };
 //onSubmit={handleFormUpdate}
+  if(routesLoading || usersLoading) {
+    return <h1>Loading settings...</h1>
+  }
+  if(jobUpdating) {
+    return <h1>Updating jobs...</h1>
+  }
+  
+
+   
+  
+
+  if(routesError || usersError || jobUpdateError){
+    return ( 
+        <div>
+          <div>
+            <h1>{routesError}</h1>
+          </div>
+          <div>
+            <h1>{usersError}</h1>
+          </div>
+          <div>
+            <h1>{jobUpdateError}</h1>
+          </div>
+        </div>
+      )
+  }
+
   return (
       <form autoComplete="off" >
         <Grid container direction="column" >

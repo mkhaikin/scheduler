@@ -43,10 +43,14 @@ module.exports = {
                     const {email, password} = req.body
 console.log("access_controller login, email: " + email + ", password: " + password)
 
-                    const userData = await loginService(email, password);
+                  /*   const userData = await loginService(email, password);
                    
                     res.cookie('refreshToken', userData.refreshToken, {maxAge: 30*24*60*60*1000, httpOnly:true})
-                    return res.json(userData)
+                    return res.json(userData) */
+                    loginService(email, password).then(userData =>{
+                        res.cookie('refreshToken', userData.refreshToken, {maxAge: 30*24*60*60*1000, httpOnly:true})
+                        return res.json(userData)
+                    })
                     
                 } catch(e){
                     console.log(e);

@@ -7,7 +7,6 @@ import { fetchUsers } from '../../../store/action-creators/usercall';
 import {
   GridColDef,
   GridApi,
-  GridCellValue
 } from "@material-ui/data-grid";
 import Button from "@material-ui/core/Button";
 import EditIcon from '@material-ui/icons/Edit';
@@ -76,13 +75,11 @@ export default function EmployeeTable() {
   cols = [...columns, ...datacolumns]
 
   return (
-    <div style={{ height: 400, width: '100%' }}>  
+    <div style={{ height: 500, width: '100%' }}>  
       {openEditDialog ?  <EmployeeEditForm empId = {editEmployeeId} closeDialog={setOpenEditDialog} /> :
-      <DataGrid rows={getRows(users)} columns={cols} pageSize={5} checkboxSelection rowHeight={30} />
+      <DataGrid rows={getRows(users)} columns={cols} pageSize={10} checkboxSelection rowHeight={30} />
       }
     </div>
   );
 }
-/*
-//{openEditDialog ?  <EmployeeEditForm empId = {editEmployeeId} closeDialog={setOpenEditDialog} /> :
-*/
+

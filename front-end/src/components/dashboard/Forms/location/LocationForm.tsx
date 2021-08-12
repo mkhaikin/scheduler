@@ -76,13 +76,13 @@ export const LocationForm = () => {
   const we = [{id : 1, pos : "None"}, {id: 2, pos : "W"}, {id: 3, pos: "E"}]
 
   //console.log("In Form => " + values["firstName"])
-  const getEntries = () =>{
+/*   const getEntries = () =>{
     
     Object.entries(routes).map((key, value)=>{
       console.log(key + " : " + value)
       
     })
-  }
+  } */
 
   const getValueByKeyName = (vals: any, keyName : string) =>{
             var res: any

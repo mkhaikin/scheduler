@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import {AppBar, Grid, IconButton, InputBase, makeStyles, Toolbar, Typography} from '@material-ui/core'
 //import RoomIcon from '@material-ui/icons/Room';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import {useTypesSelector} from "../hooks/menuTypesSelector";
-
+import {Context} from '../index'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -19,7 +18,9 @@ const useStyles = makeStyles((theme) => ({
       }
   }));
 
-export default function Header(props){
+export default function Header(){
+
+    const {userstore} = useContext(Context)
    
     const classes = useStyles();
 
@@ -42,9 +43,10 @@ export default function Header(props){
                         </Typography>
                     </Grid>
                     <Grid item sm></Grid>
-                    {props.user.isAuth ?
+                    {userstore.isAuth ?
                     <Grid item>
-                        <IconButton size="small" onClick={()=>props.user.logout()}>
+                        {`${userstore.user.email}`}
+                        <IconButton size="small" onClick={()=>userstore.logout()}>
                         <MeetingRoomIcon /> Logout
                            
                         </IconButton>                    

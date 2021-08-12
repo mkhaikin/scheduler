@@ -46,12 +46,16 @@ export const locationReducer = (state = initialState, action: LocationAction): L
             return {...state, loading: false, locations: locations}
             */
 
-            //console.log(" action.payload.ind: " +  action.payload.ind)
-            const index = state.locations.findIndex(location => location.ind ===  action.payload.ind); //finding index of the item
+           /*  console.log(" action.payload.ind: " +  action.payload.ind)
+            console.log("locations length: " + state.locations.length)
+            console.log("locations index = 0, ind: " + state.locations[0].ind) */
+
+            //finding index of the location which ind is a number not a string. So we need to compare strings
+            const index = state.locations.findIndex((location) => (''+ location.ind) ===  action.payload.ind); 
             //console.log("Index of updated item: " + index)
             const newArray = [...state.locations]; //making a new array
             //console.log("newArray[index].ind: " + newArray[index].ind)
-            newArray[index].routeId = action.payload.routeId//changing value in the new array
+            newArray[index].routeid = action.payload.routeid//changing value in the new array
             newArray[index].area = action.payload.area
             newArray[index].street_avenue = action.payload.street_avenue
             newArray[index].w_e = action.payload.w_e
@@ -64,10 +68,18 @@ export const locationReducer = (state = initialState, action: LocationAction): L
                 loading: false
                }
             
-            ////////////////////////////////////////////////////////
+           
         case LocationActionTypes.UPDATE_LOCATION_ERROR:
             return {...state, loading: false, error: action.payload}  
-            
+
+         ////////////////////////////////////////////////////////
+
+        case LocationActionTypes.ADD_LOCATION:
+            return {...state, loading: true}
+        case LocationActionTypes.ADD_LOCATION__SUCCESS:
+            return {...state, loading: false}  
+        case LocationActionTypes.ADD_LOCATION_ERROR:
+            return {...state, loading: false, error: action.payload}     
         default:
             return state
     }

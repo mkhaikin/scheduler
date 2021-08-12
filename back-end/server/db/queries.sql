@@ -130,10 +130,7 @@ query = {
     INSERT_NEW_JOB: `INSERT INTO dayjoblist( routeId, driverId, date) VALUES ( ?, ?, ?)`,
     INSERT_NEW_LOCATION: `INSERT INTO locations (routeId, area, street_avenue, w_e, number, notice) VALUES(?,?,?,?,?,?)`,
     INSERT_NEW_ROUTE: `INSERT INTO routes (name) VALUES(?)`,
-    INSERT_WORKLOG: `INSERT INTO worklog ( date, locationId, driverId) 
-                        SELECT ?, locations.ind, ?
-                        FROM locations
-                        WHERE locations.routeId = ?`,        //?-datev ?-driverId ?-routeId
+    INSERT_WORKLOG: `INSERT INTO worklog ( date, locationId, bag, driverId) VALUES(?,?,?,?)`,        
     DELETE_ROUTE_BY_ID: `DELETE FROM routes WHERE ind = ?`,
     DELETE_LOCATION_BY_ID: `DELETE FROM locations WHERE ind = ?`,
     DELETE_JOB_BY_ID: `DELETE FROM dayjoblist WHERE ind = ?`,
@@ -163,7 +160,7 @@ query = {
     SELECT_SCHEDULED_DRIVER_JOBS_TODAY_FUTURE: `SELECT d1.ind as ind, 
                                                 DATE_FORMAT(d1.date, '%Y-%m-%d') as scheduled, 
                                                 concat(d1.routeId, '-', r.name) as route, 
-                                                concat(d1.driverId, '-', u.firstname, ' ', u.lastname, ', ', u.cell) as driver
+                                                concat(d1.driverId, '-', u.firstname, ' ', u.lastname, ', ', u.cell) as driver  
                                         FROM dayjoblist d1
 	                                    JOIN routes as r 
 		                                ON   d1.routeId = r.ind
@@ -175,7 +172,7 @@ query = {
                                                 DATE_FORMAT(d1.date, '%Y-%m-%d') as scheduled, 
                                                 concat(d1.routeId, '-', r.name) as route, 
                                                 concat(d1.driverId, '-', u.firstname, ' ', u.lastname, ', ', u.cell) as driver,
-                                                l.area, l.street_avenue, l.w_e, l.number
+                                                l.area, l.street_avenue, l.w_e, l.number, l.ind as locationid
                                         FROM dayjoblist d1 
 	                                    JOIN routes as r 
 		                                ON   d1.routeId = r.ind
@@ -184,13 +181,40 @@ query = {
                                         JOIN locations l
                                         ON r.ind = l.routeId
                                         WHERE STR_TO_DATE(d1.date, '%Y-%m-%d' ) =  DATE(CURDATE()) 
-                                        AND u.email= ?`,                                        
-
-
+                                        AND u.email= ?`,  
+    INSERT_UPDATE_WORKLOG_TODAY: `INSERT INTO worklog (date, locationId, bag, driverId)
+                                                VALUES (?, ?, ?, ?)
+                                                ON DUPLICATE KEY UPDATE
+                                                bag     = VALUES(bag)`,
+    SELECT_SCHEDULED_DRIVER_JOBS_THISWEEK: `SELECT d1.ind as ind, 
+                                                DATE_FORMAT(d1.date, '%Y-%m-%d') as scheduled, 
+                                                concat(d1.routeId, '-', r.name) as route, 
+                                                concat(d1.driverId, '-', u.firstname, ' ', u.lastname, ', ', u.cell) as driver
+                                        FROM dayjoblist d1
+	                                    JOIN routes as r 
+		                                ON   d1.routeId = r.ind
+	                                    JOIN users u
+		                                ON   d1.driverId = u.ind
+                                        WHERE WEEK(STR_TO_DATE(d1.date, '%Y-%m-%d' )) =  WEEK(DATE(CURDATE()))
+                                        AND u.email= ? `, 
+    SELECT_DRIVER_ALL_WORKLOG: `SELECT w.ind as ind, 
+                                                DATE_FORMAT(w.date, '%Y-%m-%d') as doneon, 
+                                                w.bag,
+                                                concat(l.ind, ': ', l.number ,' ', l.street_avenue, ' ', COALESCE(l.w_e, ''), ', ', l.area) as location,
+                                                concat(u.ind, '-', u.firstname, ' ', u.lastname, ', ', u.cell) as driver
+                                            FROM worklog as w
+                                            JOIN locations as l
+                                            ON w.locationId = l.ind
+                                            JOIN users as u
+                                            ON w.driverId = u.ind
+                                            AND u.email= ?`,                                        
 }
 
 
 module.exports = query;
+//ALTER TABLE worklog ADD UNIQUE (date, locationId, driverId)
+
+
 /*
 SELECT curdate() as Today, 
 	CONCAT(`firstname`, " ", `lastname`) as Driver,

@@ -19,6 +19,10 @@ export enum UserActionTypes{
     FETCH_USERS_ID_NAME = 'FETCH_USERS_ID_NAME',
     FETCH_USERS_ID_NAME_SUCCESS = 'FETCH_USERS_ID_NAME_SUCCESS',
     FETCH_USERS_ID_NAME_ERROR = 'FETCH_USERS_ID_NAME_ERROR',
+
+    ADD_USER = 'ADD_USER',
+    ADD_USER_SUCCESS = 'ADD_USER_SUCCESS',
+    ADD_USER_ERROR = 'ADD_USER_ERROR',
 }
 
 interface FetchUsersAction{
@@ -63,6 +67,21 @@ interface UpdateUsersErrorAction{
     payload: string;
 }
 
+interface AddUsersAction{
+    type: UserActionTypes.ADD_USER;
+}
+
+interface AddUsersSuccessAction{
+    type: UserActionTypes.ADD_USER_SUCCESS;
+    payload: any;
+}
+
+interface AddUsersErrorAction{
+    type: UserActionTypes.ADD_USER_ERROR;
+    payload: string;
+}
+
 export type UserAction = FetchUsersAction | FetchUsersSuccessAction | FetchUsersErrorAction | 
                         FetchUserIdNameAction | FetchUsersIdNameSuccessAction | FetchUsersIdNameErrorAction |
-                        UpdateUsersAction | UpdateUsersSuccessAction | UpdateUsersErrorAction
+                        UpdateUsersAction | UpdateUsersSuccessAction | UpdateUsersErrorAction |
+                        AddUsersAction | AddUsersSuccessAction | AddUsersErrorAction

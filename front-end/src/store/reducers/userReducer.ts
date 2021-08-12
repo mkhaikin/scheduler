@@ -31,7 +31,8 @@ export const userReducer = (state = initialState, action: UserAction): UserState
             return {...state, loading: true}
         case UserActionTypes.UPDATE_USER_SUCCESS:
             //console.log(" action.payload.ind: " +  action.payload.ind)
-            const index = state.users.findIndex(user => user.ind ===  action.payload.ind); //finding index of the item
+                    //finding index of the item, compare number with string
+            const index = state.users.findIndex(user => (''+ user.ind) ===  action.payload.ind); 
             //console.log("Index of updated item: " + index)
             const newArray = [...state.users]; //making a new array
             //console.log("newArray[index].ind: " + newArray[index].ind)
@@ -51,6 +52,13 @@ export const userReducer = (state = initialState, action: UserAction): UserState
             ////////////////////////////////////////////////////////
         case UserActionTypes.UPDATE_USER_ERROR:
             return {...state, loading: false, error: action.payload}  
+
+        case UserActionTypes.ADD_USER:
+            return {...state, loadingId: true}
+        case UserActionTypes.ADD_USER_SUCCESS:
+            return {...state, loadingId: false, usersIdName: action.payload}
+        case UserActionTypes.ADD_USER_ERROR:
+            return {...state, loadingId: false, errorId: action.payload} 
 
         default:
             return state

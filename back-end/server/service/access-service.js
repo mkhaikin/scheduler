@@ -10,9 +10,9 @@ async function findOne(email){
     /* */
     try{
        
-        //console.log("access-service FindOne")
+        console.log("access-service FindOne")
         const candidate = await db.findone(email);
-        //console.log("access-service FindOne candidate: " + candidate)
+        console.log("access-service FindOne candidate: " + candidate)
         if(candidate){
            
             //console.log("User with e-mail address ${email} already exists")
@@ -71,16 +71,15 @@ module.exports = {
                         
                         const badge = {email, ...{userbadge}}
                         const tokens = await tokenService.generateTokens({...badge})
-                        console.log("registrationService tokens: " + tokens)
+                        console.log("--------------------registrationService tokens: " + tokens.refreshToken)
                         await tokenService.saveToken(userbadge._id, tokens.refreshToken)  
-                        await tokenService.
-                        validateRefreshToken(tokens.refreshToken)
+                        await tokenService.validateRefreshToken(tokens.refreshToken)
                                                
                         return {...tokens, user: badge}
                     }
                     else{
                         //console.log("Error in registration tranzaction");
-                        throw ApiError.BadRequest('User with e-mail address ${email} already exists')
+                        throw ApiError.BadRequest(`User with e-mail address ${email} already exists`)
                     }
                 } catch(e){
                     console.log(e);
@@ -92,7 +91,7 @@ module.exports = {
                 const userpassword = await db.selectpassword(email)
                 console.log('DB password: ' + userpassword[0].password)
                 if(!userpassword[0].password)
-                    throw  ApiError.BadRequest('User with such e-mail address ${email} was not found.')
+                    throw  ApiError.BadRequest(`User with such e-mail address ${email} was not found.`)
 
                 const isPassEquals = await bcrypt.compare(password, userpassword[0].password)
                 console.log('Password compare, isPassEquals: ' + isPassEquals)
@@ -104,7 +103,7 @@ module.exports = {
                                 
                 const badge = {email, ...{userbadge}}
                 const tokens = await tokenService.generateTokens({...badge})
-                //console.log("registrationService tokens: " + tokens)
+                console.log("---------------------registrationService tokens login : " + tokens.refreshToken)
                 await tokenService.saveToken(userbadge._id, tokens.refreshToken)                        
                 
                 return {...tokens, user: badge}
@@ -140,7 +139,7 @@ module.exports = {
             const userbadge = await getBadge(email)                                
             const badge = {email, ...{userbadge}}
             const tokens = await tokenService.generateTokens({...badge})
-            //console.log("registrationService tokens: " + tokens)
+            console.log("--------------registrationService.refreshService tokens: " + tokens.refreshToken)
             await tokenService.saveToken(userbadge._id, tokens.refreshToken)                        
     console.log("refreshService : 4")       
             return {...tokens, user: badge}

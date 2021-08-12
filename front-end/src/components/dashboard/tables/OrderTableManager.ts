@@ -26,10 +26,10 @@ function createWorklogData(
 
 export function getRows(data: any[]){
   const rows:any = []
-  data.map((row, index) => {
+  data.map((row, index) => (
       
       rows.push(createWorklogData( index + 1, row.ind, row.doneon, row.bag, row.location, row.driver))
-  })
+  ))
 
   return rows;
 }

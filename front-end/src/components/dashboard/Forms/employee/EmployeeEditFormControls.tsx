@@ -1,7 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
+/* import axios from "axios";
 import qs from "qs";
-import { CancelScheduleSend } from "@material-ui/icons";
+import { CancelScheduleSend } from "@material-ui/icons"; */
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../../../store/action-creators/usercall'
 
@@ -20,12 +20,12 @@ export const useFormControls = (firstname:string, lastname: string, email: strin
   ) => {
     
   
-      const headers = {
+/*       const headers = {
           'Content-Type': 'application/json',
-      }
+      } */
 
   //  console.log("<<<<<<<<<<<<<<>>>>>>>>>>>>>>>" + values.ind)
-    var obj = {
+/*     var obj = {
       ind: values.ind,
       firstname:  values.firstname,
       lastname: values.lastname, 
@@ -33,7 +33,7 @@ export const useFormControls = (firstname:string, lastname: string, email: strin
       phone: values.phone,
       positionId: values.positionId,
       //notice: values.notice,
-    }
+    } */
   /*  
   console.log( "Update contact employee --->> ")
     console.log( "ind: " + obj.ind)
@@ -177,13 +177,9 @@ export const useFormControls = (firstname:string, lastname: string, email: strin
   const handleFormSubmit = async (e: any) => {
     e.preventDefault();
 
-    const isValid =
-      Object.values(errors).every((x) => x === "") && formIsValid();
+    const isValid = Object.values(errors).every((x) => x === "") && formIsValid();
     if (isValid) {
-      
-     let res = await UpdateContactForm(values, handleSuccess, handleError);
-     
-      
+      await UpdateContactForm(values, handleSuccess, handleError);
     }
   };
 
