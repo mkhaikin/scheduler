@@ -7,7 +7,6 @@ import { fetchJobs, deleteJob } from '../../../store/action-creators/jobcall';
 import {
   GridColDef,
   GridApi,
-  GridCellValue
 } from "@material-ui/data-grid";
 import Button from "@material-ui/core/Button";
 import EditIcon from '@material-ui/icons/Edit';
@@ -141,7 +140,7 @@ cols = [...columns, ...datacolumns]
 ///////////////////////////////////////////////
 //      {openEditDialog ?  <JobEditForm locId = {editJobId} closeDialog={setOpenEditDialog} /> : //add }
   return (
-    <div style={{ height: 350, width: '100%' }}> 
+    <div style={{ height: 450, width: '100%' }}> 
       { openEditDialog ? <UpdateOrderForm indJ = {editJobId}  routeJ={editRouteId} driverJ={editDriverId} scheduledJ={editScheduled} closeDialog={setOpenClose} /> :
         <DataGrid rows={getRows(jobs)} columns={cols} pageSize={15} checkboxSelection rowHeight={25} /> 
       }

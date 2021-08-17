@@ -1,7 +1,5 @@
 import { GridColDef } from "@material-ui/data-grid";
-import Button from "@material-ui/core/Button";
 
-///////////////////////////////////////////
 interface jobData {
   id: number;
   jobId: number;
@@ -23,10 +21,10 @@ function createJobData(
 
 export function getRows(data: any[]){
   const rows:any = []
-  data.map((row, index) => {
+  data.map((row, index) => (
       
       rows.push(createJobData( index + 1, row.ind, row.scheduled, row.route, row.driver))
-  })
+  ))
 
   return rows;
 }

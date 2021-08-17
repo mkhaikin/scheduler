@@ -5,7 +5,6 @@ import {ControlledOpenSelect} from "../../Gadgets/Select/ControlledOpen/Controll
 import {useTypesSelector} from "../../../../hooks/menuTypesSelector";
 import { useDispatch } from 'react-redux';
 import { fetchRoutes } from '../../../../store/action-creators/routescall';
-import { CancelScheduleSend } from "@material-ui/icons";
 
 const inputFieldValues = [
 /*  {
@@ -97,13 +96,13 @@ export const LocationEditForm = (props: any) => {
   dir = getDir()
   console.log("loc[0].w_e=" + loc[0].w_e + ", Dir: " + dir)
 
-  const getEntries = () =>{
+/*   const getEntries = () =>{
     
     Object.entries(routes).map((key, value)=>{
       console.log(key + " : " + value)
       
     })
-  }
+  } */
 
   const getValueByKeyName = (vals: any, keyName : string) =>{
             var res: any
@@ -120,7 +119,7 @@ export const LocationEditForm = (props: any) => {
             }
 
             return res;
-        }
+    }
   
   const handleFormCancel = () => {
     //e.preventDefault();

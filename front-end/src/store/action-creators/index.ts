@@ -7,7 +7,7 @@ import * as PositionsActionCreators from './positionscall'
 import * as JobActionCreators from './jobcall'
 import * as WorklogActionCreators from './worklogcall'
 
-export default{
+const ActionCreators = {
     ...MenuActionCreators,
     ...UserActionCreators,
     ...LocationActionCreators,
@@ -17,3 +17,4 @@ export default{
     ...RouteRecordActionCreators,
     ...WorklogActionCreators,
 }
+export default ActionCreators

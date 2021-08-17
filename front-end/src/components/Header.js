@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import {AppBar, Grid, IconButton, InputBase, makeStyles, Toolbar, Typography} from '@material-ui/core'
-import RoomIcon from '@material-ui/icons/Room';
+//import RoomIcon from '@material-ui/icons/Room';
+import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import {useTypesSelector} from "../hooks/menuTypesSelector";
+import {Context} from '../index'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -18,6 +20,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header(){
 
+    const {userstore} = useContext(Context)
+   
     const classes = useStyles();
 
     const {title } = useTypesSelector(state=> state.menu)
@@ -39,14 +43,19 @@ export default function Header(){
                         </Typography>
                     </Grid>
                     <Grid item sm></Grid>
-                    
+                    {userstore.isAuth ?
                     <Grid item>
-                        <IconButton size="small">
-                            <RoomIcon /> Logout
+                        {`${userstore.user.email}`}
+                        <IconButton size="small" onClick={()=>userstore.logout()}>
+                        <MeetingRoomIcon /> Logout
+                           
                         </IconButton>                    
-                    </Grid>
+                    </Grid> : null
+                    }
                 </Grid>
             </Toolbar>
         </AppBar>
     )
 }
+
+// {props.user.isAuth ? ` <MeetingRoomIcon /> Logout` : 'sdfasdf'} 

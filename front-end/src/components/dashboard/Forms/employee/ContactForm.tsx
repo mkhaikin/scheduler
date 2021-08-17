@@ -52,7 +52,7 @@ export const ContactForm = () => {
   const getValueByKeyName = (vals: any, keyName : string) =>{
             var res: any
             res = ""
-            Object.entries(vals).map(([key,value])=>{
+            Object.entries(vals).map(([key,value])=>{  // forEach ?
                 
                 if(key === keyName){
                     //console.log("getValueByKeyName => " + key + " value: " + value)

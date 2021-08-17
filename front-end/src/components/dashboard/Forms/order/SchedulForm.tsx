@@ -1,4 +1,4 @@
-import { Button, Grid, Typography  } from "@material-ui/core";
+import { Button, Grid,  } from "@material-ui/core";
 import React,  { useEffect } from "react";
 import { useFormControls } from "./SchedulFormControls";
 import {ControlledOpenSelect} from "../../Gadgets/Select/ControlledOpen/ControlledOpenSelect";
@@ -11,8 +11,13 @@ import MaterialUIPickers from '../../Gadgets/Picker/Picker';
 import { fetchWeekJobs } from '../../../../store/action-creators/jobcall';
 
 export const SchedulForm = () => {
-  const {routes, loading, error } = useTypesSelector(state=> state.routes)
-  const {usersIdName, loadingId, errorId } = useTypesSelector(state=> state.user)
+  const {routes } = useTypesSelector(state=> state.routes)
+  const routesLoading = useTypesSelector(state=> state.routes.loading)
+  const routesError = useTypesSelector(state=> state.routes.error)
+
+  const {usersIdName } = useTypesSelector(state=> state.user)
+  const usersLoading = useTypesSelector(state=> state.user.loadingId)
+  const usersError = useTypesSelector(state=> state.user.errorId)
 
   const dispatch = useDispatch()
 
@@ -81,6 +86,22 @@ export const SchedulForm = () => {
  
   //const i = "'" + 3 + "'"
 //{i}
+  if(routesLoading || usersLoading) {
+    return <h1>Loading...</h1>
+  }
+  if(routesError || usersError){
+    return ( 
+        <div>
+          <div>
+            <h1>{routesError}</h1>
+          </div>
+          <div>
+            <h1>{usersError}</h1>
+          </div>
+        </div>
+      )
+  }
+
   return (
     
        

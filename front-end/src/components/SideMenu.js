@@ -1,16 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { withStyles} from "@material-ui/core";
 import IconExpandLess from '@material-ui/icons/ExpandLess'
 import IconExpandMore from '@material-ui/icons/ExpandMore'
 import IconDashboard from '@material-ui/icons/Dashboard'
-import IconShoppingCart from '@material-ui/icons/ShoppingCart'
-import IconPeople from '@material-ui/icons/People'
+//import IconShoppingCart from '@material-ui/icons/ShoppingCart'
+//import IconPeople from '@material-ui/icons/People'
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import IconBarChart from '@material-ui/icons/BarChart'
 import IconLibraryBooks from '@material-ui/icons/LibraryBooks'
 import HelpIcon from '@material-ui/icons/Help';
 import LocationCityIcon from '@material-ui/icons/LocationCity';
 import ScheduleIcon from '@material-ui/icons/Schedule';
+import AirportShuttleIcon from '@material-ui/icons/AirportShuttle';
+import WorkIcon from '@material-ui/icons/Work';
 
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -21,6 +23,8 @@ import MenuItemText from './MenuItemText';
 
 import { useActions } from '../hooks/useActions';
 import { useTypesSelector } from '../hooks/menuTypesSelector';
+
+import {Context} from '../index'
 
 const drawerWidth = 160
 
@@ -53,6 +57,7 @@ const style = {
 }
 
 const SideMenu = (props) => {
+    const {userstore} = useContext(Context)
     const {classes} = props;
     const [openReports, setOpenReports] = React.useState(false)
     const [openHelp, setOpenHelp] = React.useState(false)
@@ -60,8 +65,12 @@ const SideMenu = (props) => {
     const [openLocations, setOpenLocations] = React.useState(false)
     const [openOrders, setOpenOrders] = React.useState(false)
 
+    const [openJobs, setOpenJobs] = React.useState(false)
+
     const {menuItem } = useTypesSelector(state=> state.menu)
-    const { showDashboardPage, showOrdersPage, showOrderForm, showLocationsPage, showLocationForm, showRoutesPage, showEmployeesPage, showEmployeeForm, showStorePage, showReport1Page, showReport2Page, showHelpPage1, showHelpPage2} = useActions()
+    const { showDashboardPage, showOrdersPage, showOrderForm, showLocationsPage, showLocationForm, 
+            showRoutesPage, showEmployeesPage, showEmployeeForm, showStorePage, showReport1Page, 
+            showReport2Page, showHelpPage1, showHelpPage2, showScheduledToday, showScheduledWeek, showAllScheduled, showDriverWorklog} = useActions()
 
     useEffect( () => {
         console.log("Menu item: " + menuItem)
@@ -87,8 +96,19 @@ const SideMenu = (props) => {
         setOpenHelp(!openHelp)
     }
 
+    function handleClickJobs() {
+        setOpenJobs(!openJobs)
+    }
+    
+    let userPosition = false
+    if(userstore.user.userbadge._positionid !== 3)
+        userPosition = true
+
+
     return (
+        
         <div className={classes.sideMenu}>
+            {userPosition ? 
             <List component="nav" className={classes.appMenu} disablePadding>
                 <ListItem button className={classes.menuItem} onClick={() =>showDashboardPage()}>
                     <ListItemIcon className={classes.menuItemIcon}>
@@ -198,8 +218,41 @@ const SideMenu = (props) => {
                     </ListItem>
                     </List>
                 </Collapse>
+            </List> :
+            <List component="nav" className={classes.appMenu} disablePadding>
+                <ListItem button onClick={handleClickJobs} className={classes.menuItem}>
+                        <ListItemIcon className={classes.menuItemIcon}>
+                        <AirportShuttleIcon/>
+                        </ListItemIcon> 
+                        <MenuItemText text="Job List"/>
+                        {openJobs ? <IconExpandLess /> : <IconExpandMore />}
+                </ListItem>
+                <Collapse in={openJobs} timeout="auto" unmountOnExit>
+                    <Divider />
+                    <List component="div" disablePadding>
+                    <ListItem button className={classes.menuItem} onClick={() =>showScheduledToday()}>
+                        <MenuItemText text="Today"/>
+                    </ListItem>
+                    <ListItem button className={classes.menuItem} onClick={() =>showScheduledWeek()}>
+                        <MenuItemText text="This week"/>
+                    </ListItem>
+                    <ListItem button className={classes.menuItem} onClick={() =>showAllScheduled()}>
+                        <MenuItemText text="All scheduled"/>
+                    </ListItem>
+                    </List>
+                </Collapse>
+                <ListItem button className={classes.menuItem} onClick={() =>showDriverWorklog()}>
+                    <ListItemIcon className={classes.menuItemIcon}>
+                    <WorkIcon />
+                    </ListItemIcon>                    
+                    <MenuItemText text="Dashboard"/>
+                </ListItem>
             </List>
-        </div>
+            
+             }
+        </div> 
+ 
+       
     )
 }
 

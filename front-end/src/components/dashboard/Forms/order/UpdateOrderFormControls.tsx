@@ -1,14 +1,13 @@
 import { useState } from "react";
-import axios from "axios";
-import qs from "qs";
+//import axios from "axios";
 import {format} from 'date-fns';
-
-
-
-
-
+import JobService from '../../../../services/JobService'
+import { useDispatch } from 'react-redux';
+import { updateJob } from '../../../../store/action-creators/jobcall';
 
 export const useFormControls = (route: any[], driver: any[], fn:any, indJ:any, routeJ: any, driverJ: any, scheduledJ: any, cl:any) => {
+  const dispatch = useDispatch()
+  
   const initialFormValues = {
     route: route,
     driver: driver,
@@ -22,7 +21,7 @@ export const useFormControls = (route: any[], driver: any[], fn:any, indJ:any, r
     driverJ: driverJ, 
   };
   const [values, setValues] = useState(initialFormValues);
-  const [errors, setErrors] = useState({} as any);
+  //const [errors, setErrors] = useState({} as any);
 
   const handleSelectedDate = (value: Date) => {
     let d: string
@@ -109,19 +108,17 @@ console.log("handleFormUpdate ---> routeJ: " + routeJ + ", driverJ: " + driverJ)
         console.log("driver: " + driver)
         console.log("jobdate: " + jobdate) */
         
-        const headers = {
-            'Content-Type': 'application/json',
+       /*  var obj = {
+          ind: '' + ind,
+          scheduled: jobdate,
+          route: '' + route,
+          driver: '' + driver          
         }
-  
-        var obj = {
-          ind:ind,
-          jobdate: jobdate,
-          route: route,
-          driver: driver          
-        }
-     
-       let res = await axios.put('http://localhost:3000/api/job', obj, {headers: headers})
-      console.log("UpdateJobOrder: " + res) 
+      */
+       //let res = await axios.put('http://localhost:3000/api/job', obj, {headers: headers})
+       dispatch(updateJob(ind, jobdate, route, driver))
+       //let res = JobService.UpdateJob(obj)
+      //console.log("UpdateJobOrder: " + res) 
       cl(false)
     // do stuff
     // if successful

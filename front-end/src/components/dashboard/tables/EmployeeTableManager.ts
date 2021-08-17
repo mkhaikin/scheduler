@@ -78,10 +78,10 @@ export function getRows( data: any[]){
   })
 /////////////////////////
 const rows:any = []
-items.map((row, index) => {
+items.map((row, index) => (
 
   rows.push(createEmployeeData( index + 1, row.ind, row.firstname, row.lastname, row.email, row.cell, row.positionId))
-})
+))
   ///////////////////////
 /*
   const rows = [
@@ -119,12 +119,12 @@ function createCol(
 }
 
 export function getCols(data: any[]){
-  if(!(data[0] === undefined || data[0] === null)){
+  /* if(!(data[0] === undefined || data[0] === null)){
       var keys = getKeys(data[0])
       keys.map((key, index)=>{
         console.log (index + " " + key.toUpperCase())
       })
-  } else { console.log ("data === undefined or data === null_____")}
+  } else { console.log ("data === undefined or data === null_____")} */
 
 /*
   const columns: GridColDef[] = [
@@ -153,8 +153,8 @@ export function getCols(data: any[]){
   return columns;
 }
 
-function getKeys (row: any){
+/* function getKeys (row: any){
   const keys: any[] = Object.keys(row);
   console.log("Keys: " + keys[0])
   return Object.keys(row);
-}
+} */

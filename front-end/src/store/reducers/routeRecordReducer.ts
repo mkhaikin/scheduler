@@ -17,7 +17,7 @@ export const routeRecordReducer = (state = initialState, action: RouteRecordActi
         case RouteRecordActionTypes.FETCH_ROUTE_ERROR:
             return {...state, loading: false, error: action.payload}            
 
-        case RouteRecordActionTypes.ADD_ROUTE_ERROR:
+        case RouteRecordActionTypes.ADD_ROUTE:
             return {...state, loading: true}
         case RouteRecordActionTypes.ADD_ROUTE_SUCCESS:
             return {...state, loading: false, route: action.payload}

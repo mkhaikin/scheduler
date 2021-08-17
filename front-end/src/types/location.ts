@@ -16,6 +16,10 @@ export enum LocationActionTypes{
     UPDATE_LOCATION = 'UPDATE_LOCATION',
     UPDATE_LOCATION__SUCCESS = 'UPDATE_LOCATION__SUCCESS',
     UPDATE_LOCATION_ERROR = 'UPDATE_LOCATION_ERROR',
+
+    ADD_LOCATION = 'ADD_LOCATION',
+    ADD_LOCATION__SUCCESS = 'ADD_LOCATION__SUCCESS',
+    ADD_LOCATION_ERROR = 'ADD_LOCATION_ERROR',
 }
 
 interface FetchLocationAction{
@@ -60,6 +64,20 @@ interface UpdateLocationErrorAction{
     payload: string;
 }
 
+interface AddLocationAction{
+    type: LocationActionTypes.ADD_LOCATION;
+}
+
+interface AddLocationSuccessAction{
+    type: LocationActionTypes.ADD_LOCATION__SUCCESS;
+    payload: any;
+}
+
+interface AddLocationErrorAction{
+    type: LocationActionTypes.ADD_LOCATION_ERROR;
+    payload: string;
+}
+
 export type LocationAction = FetchLocationAction | 
                             FetchLocationSuccessAction | 
                             FetchLocationErrorAction | 
@@ -68,4 +86,7 @@ export type LocationAction = FetchLocationAction |
                             DeleteLocationErrorAction |
                             UpdateLocationAction |
                             UpdateLocationSuccessAction |
-                            UpdateLocationErrorAction
+                            UpdateLocationErrorAction |
+                            AddLocationAction |
+                            AddLocationSuccessAction |
+                            AddLocationErrorAction

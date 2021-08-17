@@ -1,15 +1,26 @@
-import React from 'react';
+import React, {createContext} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App/App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";
 import { store } from './store';
+import UserStore from '../src/store/userstore/userstore';
+
+interface State {
+  userstore: UserStore,
+}
+const userstore = new UserStore();
+export const Context = createContext<State>({
+  userstore
+})
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-    </Provider>,
+  <Context.Provider value={ {userstore} }>
+    <Provider store={store}>
+      <App />
+    </Provider>
+    </Context.Provider>,
   document.getElementById('root')
 );
 

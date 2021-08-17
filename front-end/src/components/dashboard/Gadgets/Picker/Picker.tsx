@@ -37,6 +37,7 @@ export default function MaterialUIPickers(props:any) {
               value={selectedDate}
               format="dd/MM/yyyy"
               onChange={handleDateChange}
+              defaultValue= {dateSet}
               disablePast={dispast}
               KeyboardButtonProps={{
                 'aria-label': 'change date',

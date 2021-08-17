@@ -85,5 +85,29 @@ export const showHelpPage2 = () => {
     }
 }
 
+export const showScheduledToday = () => {
+    return (dispatch: Dispatch<MenuAction>) =>{
+        dispatch( {type: MenuActionTypes.SHOW_SCHEDULED_TODAY})
+    }
+}
+
+export const showScheduledWeek = () => {
+    return (dispatch: Dispatch<MenuAction>) =>{
+        dispatch( {type: MenuActionTypes.SHOW_SCHEDULED_WEEK})
+    }
+}
+
+export const showAllScheduled = () => {
+    return (dispatch: Dispatch<MenuAction>) =>{
+        dispatch( {type: MenuActionTypes.SHOW_ALL_SCHEDULED})
+    }
+}
+
+export const showDriverWorklog = () => {
+    return (dispatch: Dispatch<MenuAction>) =>{
+        dispatch( {type: MenuActionTypes.SHOW_DRIVER_WORKLOG})
+    }
+}
+
 
 

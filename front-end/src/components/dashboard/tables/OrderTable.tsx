@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { DataGrid} from '@material-ui/data-grid';
 import {getRows, getCols} from './OrderTableManager'
 import {useTypesSelector} from "../../../hooks/menuTypesSelector";
@@ -17,7 +17,7 @@ import {
 
 
 export default function WorklogTable(props:any) {
-  const {worklog, worklogsum, loading, error } = useTypesSelector(state=> state.worklog)
+  const {worklog, loading, error } = useTypesSelector(state=> state.worklog)
   const dispatch = useDispatch()
 
   useEffect( () => {

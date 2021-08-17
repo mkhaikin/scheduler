@@ -1,41 +1,43 @@
 import { useState } from "react";
-import axios from "axios";
-import qs from "qs";
+//import axios from "axios";
+//import qs from "qs";
+import { addUser } from '../../../../store/action-creators/usercall';
+import { useDispatch } from 'react-redux';
 
 
 const PostContactForm = async (
   values: any,
   successCallback: any,
-  errorCallback: any
+  errorCallback: any,
+  dispatch: any
 ) => {
-
-    var obj2 = JSON.parse(JSON.stringify(values));
-   
-  /*    
-            console.log("firstName: " + obj2.firstName)
-            console.log("lastName: " + obj2.lastName)
-            console.log("email: " + obj2.email)
-            console.log("phone: " + obj2.phone)
-            console.log("notice: " + obj2.notice)
-            console.log("position: " + obj2.position)
-*/
-        const headers = {
-            'Content-Type': 'application/json',
-        }
-
-
   
-  var obj3 = {
+
+   
+     
+            console.log("firstName: " + values.firstName)
+            console.log("lastName: " + values.lastName)
+            console.log("email: " + values.email)
+            console.log("phone: " + values.phone)
+            console.log("notice: " + values.notice)
+            console.log("position: " + values.position)
+
+/*         const headers = {
+            'Content-Type': 'application/json',
+        } */
+  
+/*   var obj3 = {
     firstName:  values.firstName,
     lastName: values.lastName,
     email: values.email,
     phone: values.phone,
     notice: values.notice,
     position: values.position,
-}
+} */
     //let res = await axios.post('http://localhost:3000/api/staff/user', {title: "Test", id: 4}, {headers: headers})
-    let res = await axios.post('http://localhost:3000/api/staff/user', obj3, {headers: headers})
-    console.log(res)
+    //let res = await axios.post('http://localhost:3000/api/staff/user', obj3, {headers: headers})
+    dispatch(addUser(values.firstName, values.lastName, values.email, values.phone, values.position, values.notice)) 
+    //console.log(res)
     
   // do stuff
   // if successful
@@ -49,7 +51,7 @@ const initialFormValues = {
   email: "",
   phone: "",
   notice: "",
-  position: 3,
+  position: 3,  // hard coded!!!!!!!!!!!!!!!!!
   formSubmitted: false,
   success: false
 };
@@ -57,6 +59,8 @@ const initialFormValues = {
 export const useFormControls = () => {
   const [values, setValues] = useState(initialFormValues);
   const [errors, setErrors] = useState({} as any);
+
+  const dispatch = useDispatch()
 
   const validate: any = (fieldValues = values) => {
     let temp: any = { ...errors };
@@ -147,7 +151,7 @@ export const useFormControls = () => {
     const isValid =
       Object.values(errors).every((x) => x === "") && formIsValid();
     if (isValid) {
-      await PostContactForm(values, handleSuccess, handleError);
+      await PostContactForm(values, handleSuccess, handleError, dispatch);
       
     }
   };

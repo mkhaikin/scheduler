@@ -4,6 +4,7 @@ export interface MenuState{
 }
 
 export enum MenuActionTypes{
+    SHOW_BASIC_PAGE = 'SHOW_BASIC_PAGE',
     SHOW_DASHBOARD_PAGE = 'SHOW_DASHBOARD_PAGE',
     SHOW_ORDERS_PAGE = 'SHOW_ORDERS_PAGE',
     SHOW_ORDER_FORM = 'SHOW_ORDER_FORM',
@@ -18,9 +19,15 @@ export enum MenuActionTypes{
     SHOW_REPORTS_PAGE_2 = 'SHOW_REPORTS_PAGE_2',
     SHOW_HELP_PAGE_1 = 'SHOW_HELP_PAGE_1',
     SHOW_HELP_PAGE_2 = 'SHOW_HELP_PAGE_2',
+
+    SHOW_SCHEDULED_TODAY = 'SHOW_SCHEDULED_TODAY',
+    SHOW_SCHEDULED_WEEK = 'SHOW_SCHEDULED_WEEK',
+    SHOW_ALL_SCHEDULED = 'SHOW_ALL_SCHEDULED',
+    SHOW_DRIVER_WORKLOG = 'SHOW_DRIVER_WORKLOG',
 }
 
 export enum PageTypes{
+    BASIC_PAGE =  'BASIC_PAGE',
     DASHBOARD_PAGE = 'DASHBOARD_PAGE',
     ORDERS_PAGE = 'ORDERS_PAGE',
     ORDER_FORM = 'ORDER_FORM',
@@ -35,6 +42,15 @@ export enum PageTypes{
     REPORTS_PAGE_2 = 'REPORTS_PAGE_2',
     HELP_PAGE_1 = 'HELP_PAGE_1',
     HELP_PAGE_2 = 'HELP_PAGE_2',
+
+    SCHEDULED_TODAY = 'SCHEDULED_TODAY',
+    SCHEDULED_WEEK = 'SCHEDULED_WEEK',
+    ALL_SCHEDULED = 'ALL_SCHEDULED',
+    DRIVER_WORKLOG = 'DRIVER_WORKLOG',
+}
+
+interface BasicMenuAction{
+    type: MenuActionTypes.SHOW_BASIC_PAGE;
 }
 
 interface DashboardMenuAction{
@@ -93,7 +109,24 @@ interface Help2MenuAction{
     type: MenuActionTypes.SHOW_HELP_PAGE_2;
 }
 
+interface ShowScheduledTodyMenuAction{
+    type: MenuActionTypes.SHOW_SCHEDULED_TODAY;
+}
+
+interface ShowScheduledWeekMenuAction{
+    type: MenuActionTypes.SHOW_SCHEDULED_WEEK;
+}
+
+interface ShowAllScheduledMenuAction{
+    type: MenuActionTypes.SHOW_ALL_SCHEDULED;
+}
+
+interface ShowDriverWorklogMenuAction{
+    type: MenuActionTypes.SHOW_DRIVER_WORKLOG;
+}
+
 export type MenuAction = DashboardMenuAction 
+| BasicMenuAction
 | OrdersMenuAction
 | OrderFormMenuAction 
 //| CustomersMenuAction 
@@ -107,3 +140,7 @@ export type MenuAction = DashboardMenuAction
 | Help1MenuAction 
 | Help2MenuAction
 | RoutesMenuAction
+| ShowScheduledTodyMenuAction
+| ShowScheduledWeekMenuAction
+| ShowAllScheduledMenuAction
+| ShowDriverWorklogMenuAction

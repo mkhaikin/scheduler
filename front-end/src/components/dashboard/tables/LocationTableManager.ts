@@ -1,15 +1,10 @@
 import {
-  DataGrid,
   GridColDef,
-  GridApi,
-  GridCellValue
 } from "@material-ui/data-grid";
-import Button from "@material-ui/core/Button";
 
-///////////////////////////////////////////
 interface locationData {
   id: number;
-  locationId: number;
+  locationId: string;
   routeId: number;
   area: string;
   adress: string;
@@ -18,7 +13,7 @@ interface locationData {
 
 function createLocationData(
   id: number,
-  locationId: number,
+  locationId: string,
   routeId: number,
   area: string,
   adress: string,
@@ -30,9 +25,10 @@ function createLocationData(
 
 export function getRows(data: any[]){
   const rows:any = []
-  data.map((row, index) => {
+  data.map((row, index) =>  {
       var dir = row.w_e !== null ? " " + row.w_e : "";
       rows.push(createLocationData( index + 1, row.ind, row.routeId, row.area, row.number + " " + row.street_avenue + " " + dir , row.notice))
+      return 1
   })
 
   return rows;

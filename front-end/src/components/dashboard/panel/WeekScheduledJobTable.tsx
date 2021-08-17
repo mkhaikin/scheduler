@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { DataGrid} from '@material-ui/data-grid';
-import { Grid } from "@material-ui/core";
+//import { Grid } from "@material-ui/core";
 import {getRows, getCols} from './WeekScheduledJobTableManager'
 import {useTypesSelector} from "../../../hooks/menuTypesSelector";
 import { useDispatch } from 'react-redux';
@@ -8,7 +8,7 @@ import { fetchWeekJobs, deleteJob } from '../../../store/action-creators/jobcall
 import {
   GridColDef,
   GridApi,
-  GridCellValue
+  //GridCellValue
 } from "@material-ui/data-grid";
 import Button from "@material-ui/core/Button";
 import EditIcon from '@material-ui/icons/Edit';

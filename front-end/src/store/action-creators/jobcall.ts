@@ -1,13 +1,15 @@
 import { Dispatch } from "redux"
 import {JobAction, JobActionTypes} from "../../types/job"
-import axios from "axios";
+//import axios from "axios";
+import JobService from '../../services/JobService'
 
 export const fetchJobs = () => {
     return async (dispatch: Dispatch<JobAction>) => {
         try{
             dispatch( {type: JobActionTypes.FETCH_JOBS})
-            const response = await axios.get('http://localhost:3000/api/job/dayfuture') 
-            
+            //const response = await axios.get('http://localhost:3000/api/job/dayfuture') 
+            const response = await JobService.fetchJobsTodayFuture()
+                       
             //console.log ("Response: " + response.data[0].scheduled)
             dispatch( {type: JobActionTypes.FETCH_JOBS_SUCCESS, payload: response.data})
         } catch (e){
@@ -17,10 +19,12 @@ export const fetchJobs = () => {
 }
 
 export const deleteJob = (ind: any) => {
+    console.log ("deleteJob, ind: " + ind)
     return async (dispatch: Dispatch<JobAction>) => {
         try{
             dispatch( {type: JobActionTypes.DELETE_JOB})
-            const response = await axios.delete(`http://localhost:3000/api/job/${ind}`) 
+            //const response = await axios.delete(`http://localhost:3000/api/job/${ind}`) 
+            const response = await JobService.deleteJobById(ind)
            
             console.log ("Response: " + JSON.stringify(response))
             console.log ("deleteJob, ind: " + ind)
@@ -38,25 +42,22 @@ export const updateJob = (
             driverId: number,
               ) => {
     return async (dispatch: Dispatch<JobAction>) => {
-        try{
+        //try{
             dispatch( {type: JobActionTypes.UPDATE_JOB})
             var obj = {
-                        ind: ind,
-                        date: date,
-                        routeId:  routeId,
-                        driverId: driverId,
+                        ind: '' + ind,
+                        scheduled: date,
+                        route:  '' + routeId,
+                        driver: '' + driverId,
                      }
-            const headers = {
-                        'Content-Type': 'application/json',
-            }                     
-            const response = await axios.put('http://localhost:3000/api/job', obj, {headers: headers}) 
-            //JSON.stringify
-            //console.log ("Response: " + JSON.stringify(response))
-            console.log ("updateJob, ind: " + ind)
-            dispatch( {type: JobActionTypes.UPDATE_JOB__SUCCESS, payload: obj})
-        } catch (e){
+               
+            //const response = await axios.put('http://localhost:3000/api/job', obj, {headers: headers}) 
+            JobService.UpdateJob(obj).
+            then(()=> dispatch( {type: JobActionTypes.UPDATE_JOB__SUCCESS, payload: obj})).
+            catch((e)=>dispatch( {type: JobActionTypes.UPDATE_JOB_ERROR, payload: "Error during update!"}))
+        /* } catch (e){
             dispatch( {type: JobActionTypes.UPDATE_JOB_ERROR, payload: "Error during update!"})
-        }
+        } */
     }
 }
 
@@ -65,12 +66,59 @@ export const fetchWeekJobs = () => {
     return async (dispatch: Dispatch<JobAction>) => {
         try{
             dispatch( {type: JobActionTypes.FETCH_WEEK_JOBS})
-            const response = await axios.get('http://localhost:3000/api/job/thisweek') 
+            //const response = await axios.get('http://localhost:3000/api/job/thisweek') 
+
+            const response = await JobService.fetchJobsThisWeek()
             
             //console.log ("Response: " + response.data[0].scheduled)
             dispatch( {type: JobActionTypes.FETCH_WEEK_JOBS_SUCCESS, payload: response.data})
         } catch (e){
             dispatch( {type: JobActionTypes.FETCH_WEEK_JOBS_ERROR, payload: "Error during download!"})
+        }
+    }
+}
+
+export const fetchDriverTodayJobs = () => {
+    return async (dispatch: Dispatch<JobAction>) => {
+        try{
+            dispatch( {type: JobActionTypes.FETCH_JOBS})
+            //const response = await axios.get('http://localhost:3000/api/job/dayfuture') 
+            const response = await JobService.fetchDriverJobsToday()  // email no need, it gets from jwt identification
+                       
+            console.log ("Response: " + JSON.stringify( response))
+            dispatch( {type: JobActionTypes.FETCH_JOBS_SUCCESS, payload: response.data})
+        } catch (e){
+            dispatch( {type: JobActionTypes.FETCH_JOBS_ERROR, payload: "Error during download!"})
+        }
+    }
+}
+
+export const fetchDriverWeekJobs = () => {
+    return async (dispatch: Dispatch<JobAction>) => {
+        try{
+            dispatch( {type: JobActionTypes.FETCH_JOBS})
+            //const response = await axios.get('http://localhost:3000/api/job/driver/thiswek') 
+            const response = await JobService.fetchDriverJobsThisWeek()  // email no need, it gets from jwt identification
+                       
+            console.log ("Response: " + JSON.stringify( response))
+            dispatch( {type: JobActionTypes.FETCH_JOBS_SUCCESS, payload: response.data})
+        } catch (e){
+            dispatch( {type: JobActionTypes.FETCH_JOBS_ERROR, payload: "Error during download!"})
+        }
+    }
+}
+
+export const fetchDriverAllJobs = () => {
+    return async (dispatch: Dispatch<JobAction>) => {
+        try{
+            dispatch( {type: JobActionTypes.FETCH_JOBS})
+            //const response = await axios.get('http://localhost:3000/api/job/driver/thiswek') 
+            const response = await JobService.fetchDriverAllJobs()  // email no need, it gets from jwt identification
+                       
+            console.log ("Response: " + JSON.stringify( response))
+            dispatch( {type: JobActionTypes.FETCH_JOBS_SUCCESS, payload: response.data})
+        } catch (e){
+            dispatch( {type: JobActionTypes.FETCH_JOBS_ERROR, payload: "Error during download!"})
         }
     }
 }

@@ -5,25 +5,22 @@ import {useTypesSelector} from "../../../hooks/menuTypesSelector";
 import { useDispatch } from 'react-redux';
 import { fetchRoutes } from '../../../store/action-creators/routescall';
 import { updateRoute, addRoute } from '../../../store/action-creators/routerecordcall';
-import { useConfirm } from "material-ui-confirm";
+//import { useConfirm } from "material-ui-confirm";
 import {
   DataGrid,
-  GridColDef,
-  GridApi,
-  GridCellValue,
   GridEditCellPropsParams,
   GridEditRowsModel,
   GridColumns 
 } from "@material-ui/data-grid";
 import { Button, TextField , Grid, Typography  } from "@material-ui/core";
-import { truncate } from 'node:fs';
+//import { truncate } from 'node:fs';
 
 //import Button from "@material-ui/core/Button";
 
 export default function RouteTable() {
   const {routes, loading, error } = useTypesSelector(state=> state.routes)
   const dispatch = useDispatch()
-  const confirm = useConfirm();
+  //const confirm = useConfirm();
   const [rows, setRows] = React.useState<any[]>(getRows(routes));
   const [editRowsModel, setEditRowsModel] = React.useState<GridEditRowsModel>({});
   const [newroute, setRoute] = useState("")
@@ -61,8 +58,9 @@ export default function RouteTable() {
           if(row.id === id){
             console.log("routeId: " + row.routeId + ", row.id: " + row.id)
             routeId = row.routeId
-            return 
+            return 1
           }
+          return 0
         })
         console.log("Committed  >>>>>> routeId: " + routeId + ", newvalue: " + newvalue)
         dispatch(updateRoute(routeId, newvalue))

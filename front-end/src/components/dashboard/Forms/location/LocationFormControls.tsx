@@ -1,17 +1,16 @@
 import { useState } from "react";
-import axios from "axios";
-import qs from "qs";
+//import axios from "axios";
+import { useDispatch } from 'react-redux';
+import { addLocation } from '../../../../store/action-creators/locationcall';
 
 
-const PostContactForm = async (
+/* const PostContactForm = async (
   values: any,
   successCallback: any,
   errorCallback: any
 ) => {
+//  const dispatch = useDispatch()
 
-    const headers = {
-        'Content-Type': 'application/json',
-    }
     let dir: any
     
     switch (values.w_e){
@@ -38,14 +37,14 @@ const PostContactForm = async (
   console.log( "number: " + obj.number)
   console.log( "notice" + obj.notice)
 
-  let res = await axios.post('http://localhost:3000/api/location', obj, {headers: headers})
-  console.log(res)
-  
+  //let res = await axios.post('http://localhost:3000/api/location', obj, {headers: headers})
+  //console.log(res)
+  dispatch(addLocation(values.routeId, values.area, values.street_avenue, dir,  values.number, values.notice))
     // do stuff
   // if successful
   if (true) successCallback();
   else errorCallback();
-};
+}; */
 
 const initialFormValues = {
   area: "",
@@ -61,6 +60,8 @@ const initialFormValues = {
 export const useFormControls = () => {
   const [values, setValues] = useState(initialFormValues);
   const [errors, setErrors] = useState({} as any);
+
+  const dispatch = useDispatch()
 
   const validate: any = (fieldValues = values) => {
     let temp: any = { ...errors };
@@ -147,7 +148,7 @@ export const useFormControls = () => {
     const isValid =
       Object.values(errors).every((x) => x === "") && formIsValid();
     if (isValid) {
-      await PostContactForm(values, handleSuccess, handleError);
+      await PostContactForm(values, handleSuccess, handleError, dispatch);
       
     }
   };
@@ -161,4 +162,47 @@ export const useFormControls = () => {
     handleRouteIdValue,
     handleWEValue
   };
+};
+
+const PostContactForm = async (
+  values: any,
+  successCallback: any,
+  errorCallback: any,
+  dispatch: any
+) => {
+//  const dispatch = useDispatch()
+
+  let dir: any
+    
+    switch (values.w_e){
+      case 2: dir = 'W'
+        break;
+      case 3: dir = 'E'
+        break;
+      default: dir = null
+    }
+  
+  var obj = {
+    routeId:  values.routeId,
+    area: values.area, 
+    street_avenue: values.street_avenue,
+    w_e: dir,
+    number: values.number,
+    notice: values.notice,
+  }
+
+  console.log( "routeId: " + obj.routeId)
+  console.log( "area: " + obj.area)
+  console.log( "street_avenue: " + obj.street_avenue)
+  console.log( "w_e: " + obj.w_e)
+  console.log( "number: " + obj.number)
+  console.log( "notice" + obj.notice)
+
+  //let res = await axios.post('http://localhost:3000/api/location', obj, {headers: headers})
+  //console.log(res)
+  dispatch(addLocation(values.routeId, values.area, values.street_avenue, dir,  values.number, values.notice))
+    // do stuff
+  // if successful
+  if (true) successCallback();
+  else errorCallback();
 };

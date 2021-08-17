@@ -5,7 +5,6 @@ import {ControlledOpenSelect} from "../../Gadgets/Select/ControlledOpen/Controll
 import {useTypesSelector} from "../../../../hooks/menuTypesSelector";
 import { useDispatch } from 'react-redux';
 import { fetchPositions } from '../../../../store/action-creators/positionscall';
-import { CancelScheduleSend } from "@material-ui/icons";
 
 const inputFieldValues = [
   {
@@ -50,8 +49,6 @@ export const EmployeeEditForm = (props: any) => {
   const {users } = useTypesSelector(state=> state.user)
   const {positions, loading, error } = useTypesSelector(state=> state.positions)
   const dispatch = useDispatch()
-
-
 
   useEffect( () => {
     dispatch(fetchPositions())
@@ -109,14 +106,14 @@ export const EmployeeEditForm = (props: any) => {
 
   const position = getPositions();
 
-  const getEntries = () =>{
+/*   const getEntries = () =>{
     
     Object.entries(positions).map((key, value)=>{
       console.log(key + " : " + value)
       
     })
   }
-
+ */
   const getValueByKeyName = (vals: any, keyName : string) =>{
             var res: any
             res = ""

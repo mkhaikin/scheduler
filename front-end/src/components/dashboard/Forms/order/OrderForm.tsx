@@ -11,9 +11,14 @@ import ScheduledJobTable from '../../tables/ScheduledJobTable';
 import { fetchJobs } from '../../../../store/action-creators/jobcall';
 
 export const OrderForm = () => {
-  const {routes, loading, error } = useTypesSelector(state=> state.routes)
-  const {usersIdName, loadingId, errorId } = useTypesSelector(state=> state.user)
+  const {routes } = useTypesSelector(state=> state.routes)
+  const routesLoading = useTypesSelector(state=> state.routes.loading)
+  const routesError = useTypesSelector(state=> state.routes.error)
 
+  const {usersIdName } = useTypesSelector(state=> state.user)
+  const usersLoading = useTypesSelector(state=> state.user.loadingId)
+  const usersError = useTypesSelector(state=> state.user.errorId)
+  
   const dispatch = useDispatch()
 
   useEffect( () => {
@@ -21,15 +26,11 @@ export const OrderForm = () => {
     dispatch(fetchUsersIdName())
   }, [])
 
-  const getChoise = (routeid:number, idname:number) =>{
-    console.log("routeid: " + routeid + ", idname: " + idname)
-    return {routeid:routeid, idname:idname}
+  const getChoise = (routeid:number, idname:number, selectedDate: string) =>{
+    console.log("routeid: " + routeid + ", idname: " + idname + " selectedDate: " + selectedDate)
+    return {routeid:routeid, idname:idname, selectedDate:selectedDate}
     
   }
-
-  
-
- 
 
   const getRoutes = () => {
     let arr: any[] 
@@ -73,6 +74,24 @@ export const OrderForm = () => {
 
   //const i = "'" + 3 + "'"
 //{i}
+
+   
+  if(routesLoading || usersLoading) {
+    return <h1>Loading...</h1>
+  }
+  if(routesError || usersError){
+    return ( 
+        <div>
+          <div>
+            <h1>{routesError}</h1>
+          </div>
+          <div>
+            <h1>{usersError}</h1>
+          </div>
+        </div>
+      )
+  }
+
   return (
     
        
@@ -83,7 +102,7 @@ export const OrderForm = () => {
           <Grid container direction="row">
             <ControlledOpenSelect name = 'Route'  posSelect = {route}  onPositionChange ={handleRouteIdValue} initPos = '1' /> 
             <ControlledOpenSelect name = 'Drivers'  posSelect = {driver}  onPositionChange ={handleIdNameValue}  initPos = {init}/>
-            <MaterialUIPickers onDateChanged = {handleSelectedDate} dispast={true}/>
+            <MaterialUIPickers onDateChanged = {handleSelectedDate} dispast={true} />
           </Grid>
           <Grid xs={6} sm={3}>
             <Button
@@ -98,7 +117,7 @@ export const OrderForm = () => {
         </Grid>
       </form>
       <Button variant="contained" color="primary" onClick={()=>{dispatch(fetchJobs())}} >
-        Update Job Table
+          Update Job Table
       </Button>
       <Typography variant="h5" component="h2" align="center">
           Current & Future Job Table
@@ -108,3 +127,4 @@ export const OrderForm = () => {
     
   );
 };
+
